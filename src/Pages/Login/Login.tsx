@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Logo from '../Common/Logo';
+import Logo from '../../Atoms/Logo';
 import styled from '@emotion/styled';
-import LabeledInput from '../Common/LabeledInput';
-import TextButton from '../Common/TextButton';
+import LabeledInput from '../../Atoms/LabeledInput';
+import TextButton from '../../Atoms/TextButton';
 import { Link } from 'react-router-dom';
-import { selectUser } from '../Redux/UserSlice/userSelectors';
+import { selectUser } from '../../Redux/UserSlice/userSelectors';
 import { authenticateThunk } from './thunks/authenticateThunk';
-import { useAppDispatch } from '../Redux/hooks';
+import { useAppDispatch } from '../../Redux/hooks';
 import { useNavigate } from 'react-router-dom';
 
 const StyledLoginBackdrop = styled.div({

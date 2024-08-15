@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Logo from '../Common/Logo';
+import Logo from '../../Atoms/Logo';
 import styled from '@emotion/styled';
-import LabeledInput from '../Common/LabeledInput';
-import TextButton from '../Common/TextButton';
+import LabeledInput from '../../Atoms/LabeledInput';
+import TextButton from '../../Atoms/TextButton';
 import { Link } from 'react-router-dom';
 import { addUser } from './api/addUser';
-import { IUserObject } from '../Common/Types';
+import { IUserObject } from '../../Atoms/Types';
 
 const StyledSignUpBackdrop = styled.div({
   display: 'flex',

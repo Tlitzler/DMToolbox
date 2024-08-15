@@ -2,10 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import SplashPageContainer from '../SplashPage/SplashPageContainer';
 import { Link } from 'react-router-dom';
-import Logo from '../Common/Logo';
-import TextButton from '../Common/TextButton';
-import { selectAuthenticated } from '../Redux/UserSlice/userSelectors';
-import { useAppSelector } from '../Redux/hooks';
+import Logo from '../../Atoms/Logo';
+import TextButton from '../../Atoms/TextButton';
+import { selectAuthenticated } from '../../Redux/UserSlice/userSelectors';
+import { useAppSelector } from '../../Redux/hooks';
 
 const StyledContainer = styled.div({
   backgroundColor: '#f6efe4',

@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import HomeContainer from './Home/HomeContainer';
-import Login from './Login/Login';
-import SignUp from './SignUp/SignUp';
+import HomeContainer from './Pages/Home/HomeContainer';
+import Login from './Pages/Login/Login';
+import SignUp from './Pages/SignUp/SignUp';
 
 import {
   BrowserRouter as Router,

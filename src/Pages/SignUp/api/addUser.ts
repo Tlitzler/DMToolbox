@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IUserObject } from '../../Common/Types';
+import { IUserObject } from '../../../Atoms/Types';
 
 export const addUser = (userData: IUserObject) => {
   return new Promise((resolve, reject) => {

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { IUserObject } from '../../../Common/Types';
-import { fetchUserThunk } from '../../../Login/thunks/fetchUserThunk';
-import { authenticateThunk } from '../../../Login/thunks/authenticateThunk';
+import { IUserObject } from '../../../Atoms/Types';
+import { fetchUserThunk } from '../../../Pages/Login/thunks/fetchUserThunk';
+import { authenticateThunk } from '../../../Pages/Login/thunks/authenticateThunk';
 
 interface IUserSlice {
   authenticated: boolean;
