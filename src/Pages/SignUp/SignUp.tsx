@@ -2,47 +2,11 @@ import React, { useState } from 'react';
 import Logo from '../../Atoms/Logo';
 import styled from '@emotion/styled';
 import LabeledInput from '../../Atoms/LabeledInput';
-import TextButton from '../../Atoms/TextButton';
+import Button from '../../Atoms/Button';
 import { Link } from 'react-router-dom';
 import { addUser } from './api/addUser';
 import { IUserObject } from '../../Atoms/Types';
-
-const StyledSignUpBackdrop = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  backgroundColor: '#ecdbc1',
-  height: '100vh',
-});
-
-const StyledSignUpContainer = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '20px',
-  backgroundColor: '#fbf8f3',
-  width: '75%',
-  margin: 'auto',
-  maxWidth: '400px',
-  padding: '20px',
-});
-
-const StyledLogoWrapper = styled.div({
-  margin: 'auto',
-  marginTop: '10px'
-});
-
-const StyledTitleText = styled.h1({
-  fontSize: '30px',
-  margin: 'auto',
-});
-
-const StyledSubtitleText = styled.h3({
-  fontSize: '15px',
-  margin: 'auto 30px',
-  textAlign: 'center',
-  fontWeight: 600,
-});
+import { useTheme } from '@emotion/react';
 
 const SignUp = () => {
   const [firstname, setFirstname] = useState('');
@@ -52,6 +16,45 @@ const SignUp = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const [successfulAdd, setSuccessfulAdd] = useState(false);
+
+  const theme = useTheme();
+
+  const StyledSignUpBackdrop = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.banner.background,
+    height: '100vh',
+  });
+  
+  const StyledSignUpContainer = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: '20px',
+    backgroundColor: theme.colors.background,
+    width: '75%',
+    margin: 'auto',
+    maxWidth: '400px',
+    padding: '20px',
+  });
+  
+  const StyledLogoWrapper = styled.div({
+    margin: 'auto',
+    marginTop: '10px'
+  });
+  
+  const StyledTitleText = styled.h1({
+    fontSize: '30px',
+    margin: 'auto',
+  });
+  
+  const StyledSubtitleText = styled.h3({
+    fontSize: '15px',
+    margin: 'auto 30px',
+    textAlign: 'center',
+    fontWeight: 600,
+  });
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>, field: 'firstname' | 'lastname' | 'email' | 'pass' | 'confirm') => {
     const target = event.target as HTMLInputElement;
@@ -109,11 +112,12 @@ const SignUp = () => {
             Let's get mapping...
           </StyledSubtitleText>
           <Link to="/login">
-              <TextButton 
-                width={400}
-                text="Log in" 
-                margin="10px auto"/>
-            </Link>
+            <Button
+              width={400}
+              margin="10px auto">
+                Log in
+            </Button>
+          </Link>
         </StyledSignUpContainer>
       ) : (
         <StyledSignUpContainer>
@@ -124,7 +128,7 @@ const SignUp = () => {
             Create an Account
           </StyledTitleText>
           <StyledSubtitleText>
-            Welcome to DM Map Manager! Fill out the form below to create your free account.
+            Welcome to the DM Toolbox! Fill out the form below to create your free account.
           </StyledSubtitleText>
           <LabeledInput
             height={60}
@@ -153,16 +157,18 @@ const SignUp = () => {
             label={'Confirm Password'}
             value={passwordConfirm}
             handleChange={(event) => handleInputChange(event, 'confirm')}/>
-            <TextButton 
+            <Button
               width={400}
-              text="Sign up" 
               margin="10px auto"
-              onClick={submitSignup}/>
+              onClick={submitSignup}>
+              Sign up
+            </Button>
             <Link to="/login">
-              <TextButton 
+              <Button
                 width={400}
-                text="Log in" 
-                margin="10px auto"/>
+                margin="10px auto">
+                Log in
+              </Button>
             </Link>
             {!!error && (
               <div>

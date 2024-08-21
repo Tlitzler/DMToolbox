@@ -27,7 +27,7 @@ interface LogoProps {
 const Logo = ({
   width = 50,
   height = 50,
-}) => (
+}: LogoProps) => (
   <StyledLogoWrapper 
     to="/"
     width={width}

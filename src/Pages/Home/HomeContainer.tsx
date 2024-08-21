@@ -3,41 +3,44 @@ import styled from '@emotion/styled';
 import SplashPageContainer from '../SplashPage/SplashPageContainer';
 import { Link } from 'react-router-dom';
 import Logo from '../../Atoms/Logo';
-import TextButton from '../../Atoms/TextButton';
+import Button from '../../Atoms/Button';
 import { selectAuthenticated } from '../../Redux/UserSlice/userSelectors';
 import { useAppSelector } from '../../Redux/hooks';
-
-const StyledContainer = styled.div({
-  backgroundColor: '#f6efe4',
-  width: '100%',
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-});
-
-const StyledBanner = styled.div({
-  backgroundColor: '#d9bb8c',
-  height: '80px',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-between',
-  boxShadow: '0px 3px 5px 6px #543e1c',
-  position: 'relative',
-  zIndex: 10,
-});
-
-const StyledButtonContainer = styled.div({
-  width: '300px',
-  display: 'flex',
-  justifyContent: 'space-between',
-});
-
-const LogoWrapper = styled.div({
-  margin: 'auto',
-  marginLeft: '15px', 
-});
+import { useTheme } from '@emotion/react';
 
 const HomeContainer = () => {
+  const theme = useTheme();
+
+  const StyledContainer = styled.div({
+    backgroundColor: theme.colors.background,
+    width: '100%',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  });
+  
+  const StyledBanner = styled.div({
+    backgroundColor: theme.colors.banner.background,
+    height: '80px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    boxShadow: `0px 3px 5px 4px ${theme.colors.banner.shadow}`,
+    position: 'relative',
+    zIndex: 10,
+  });
+  
+  const StyledButtonContainer = styled.div({
+    width: '300px',
+    display: 'flex',
+    justifyContent: 'space-around',
+  });
+  
+  const LogoWrapper = styled.div({
+    margin: 'auto',
+    marginLeft: '15px', 
+  });
+
   const authenticated = useAppSelector(selectAuthenticated);
   console.log('CUSTOM LOG authenticated', authenticated);
 
@@ -52,29 +55,33 @@ const HomeContainer = () => {
           <div>
             <StyledButtonContainer>
               <Link to="/profile">
-                <TextButton text="Profile"/>
+                <Button margin="20px auto">
+                  Profile
+                </Button>
               </Link>
-              
-              <TextButton 
-                text="Log out"
-                onClick={() => console.log('Would be logging out')}/>
+
+              <Button onClick={() => console.log('Would be logging out')}>
+                Log out
+              </Button>
               
             </StyledButtonContainer>
           </div>
         ) : (
           <StyledButtonContainer>
             <Link to="/sign-up">
-              <TextButton text="Sign up"/>
+              <Button margin="20px auto">
+                Sign up
+              </Button>
             </Link>
-            
-            
+                  
             <Link to="/login">
-              <TextButton text="Log in"/>
+              <Button margin="20px auto">
+                Log in
+              </Button>
             </Link>
             
           </StyledButtonContainer>
         )}
-          
         
       </StyledBanner>
       

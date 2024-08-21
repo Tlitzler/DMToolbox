@@ -3,6 +3,8 @@ import './App.css';
 import HomeContainer from './Pages/Home/HomeContainer';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
+import { ThemeProvider } from '@emotion/react';
+import themeList from './Theme/theme';
 
 import {
   BrowserRouter as Router,
@@ -11,11 +13,9 @@ import {
   Navigate,
 } from "react-router-dom";
 
-
-
-function App() {
+const  App = () => {
   return (
-    <div>
+    <ThemeProvider theme={themeList[0]}>
       <Router>
 
         <Routes>
@@ -37,7 +37,7 @@ function App() {
 
         </Routes>
       </Router>
-    </div>
+    </ThemeProvider>
   );
 }
 

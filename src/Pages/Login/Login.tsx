@@ -3,46 +3,13 @@ import { useSelector } from 'react-redux';
 import Logo from '../../Atoms/Logo';
 import styled from '@emotion/styled';
 import LabeledInput from '../../Atoms/LabeledInput';
-import TextButton from '../../Atoms/TextButton';
+import Button from '../../Atoms/Button';
 import { Link } from 'react-router-dom';
 import { selectUser } from '../../Redux/UserSlice/userSelectors';
 import { authenticateThunk } from './thunks/authenticateThunk';
 import { useAppDispatch } from '../../Redux/hooks';
 import { useNavigate } from 'react-router-dom';
-
-const StyledLoginBackdrop = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  backgroundColor: '#ecdbc1',
-  height: '100vh',
-});
-
-const StyledLoginContainer = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '20px',
-  backgroundColor: '#fbf8f3',
-  width: '75%',
-  margin: 'auto',
-  maxWidth: '400px',
-  padding: '30px',
-});
-
-const StyledLogoWrapper = styled.div({
-  margin: 'auto',
-  marginTop: '10px'
-});
-
-const StyledForgotPassword = styled(Link)({
-  margin: 'auto',
-});
-
-const StyledTitleText = styled.h1({
-  fontSize: '30px',
-  margin: 'auto',
-});
+import { useTheme } from '@emotion/react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -51,9 +18,44 @@ const Login = () => {
   
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const user = useSelector(selectUser);
   console.log('CUSTOM LOG testing', user);
+
+  const StyledLoginBackdrop = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.banner.background,
+    height: '100vh',
+  });
+  
+  const StyledLoginContainer = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: '20px',
+    backgroundColor: theme.colors.background,
+    width: '75%',
+    margin: 'auto',
+    maxWidth: '400px',
+    padding: '30px',
+  });
+  
+  const StyledLogoWrapper = styled.div({
+    margin: 'auto',
+    marginTop: '10px'
+  });
+  
+  const StyledForgotPassword = styled(Link)({
+    margin: 'auto',
+  });
+  
+  const StyledTitleText = styled.h1({
+    fontSize: '30px',
+    margin: 'auto',
+  });  
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>, field: 'email' | 'pass') => {
     const target = event.target as HTMLInputElement;
@@ -96,7 +98,6 @@ const Login = () => {
           Log in
         </StyledTitleText>
         
-        
         <LabeledInput
           height={60}
           label={'Email'}
@@ -115,18 +116,19 @@ const Login = () => {
               </div>
         )}
 
-        <TextButton 
+        <Button
           width={400}
-          text="Log in" 
-          onClick={submitLogin} 
-          margin="10px auto"
-          />
+          onClick={submitLogin}
+          margin="10px auto">
+            Log in
+        </Button>
         
         <Link to="/sign-up">
-          <TextButton 
+          <Button 
             width={400}
-            text="Sign up" 
-            margin="10px auto"/>
+            margin="10px auto">
+              Sign up
+          </Button>
         </Link>
 
         <StyledForgotPassword to="/">
