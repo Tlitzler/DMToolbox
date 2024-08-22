@@ -6,7 +6,7 @@ import Button from '../../Atoms/Button';
 import { Link } from 'react-router-dom';
 import { addUser } from './api/addUser';
 import { IUserObject } from '../../Atoms/Types';
-import { useTheme } from '@emotion/react';
+import PageWrapper from '../../Molecules/PageWrapper';
 
 const SignUp = () => {
   const [firstname, setFirstname] = useState('');
@@ -17,22 +17,11 @@ const SignUp = () => {
   const [error, setError] = useState('');
   const [successfulAdd, setSuccessfulAdd] = useState(false);
 
-  const theme = useTheme();
-
-  const StyledSignUpBackdrop = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.banner.background,
-    height: '100vh',
-  });
-  
   const StyledSignUpContainer = styled.div({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     gap: '20px',
-    backgroundColor: theme.colors.background,
     width: '75%',
     margin: 'auto',
     maxWidth: '400px',
@@ -102,7 +91,7 @@ const SignUp = () => {
   }
 
   return (
-    <StyledSignUpBackdrop>
+    <PageWrapper>
       {successfulAdd ? (
         <StyledSignUpContainer>
           <StyledTitleText>
@@ -177,7 +166,7 @@ const SignUp = () => {
             )}
         </StyledSignUpContainer>
       )}
-    </StyledSignUpBackdrop>
+    </PageWrapper>
   )
 };
 

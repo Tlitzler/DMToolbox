@@ -10,6 +10,7 @@ import { authenticateThunk } from './thunks/authenticateThunk';
 import { useAppDispatch } from '../../Redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import PageWrapper from '../../Molecules/PageWrapper';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,22 +23,12 @@ const Login = () => {
 
   const user = useSelector(selectUser);
   console.log('CUSTOM LOG testing', user);
-
-  const StyledLoginBackdrop = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.banner.background,
-    height: '100vh',
-  });
   
   const StyledLoginContainer = styled.div({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     gap: '20px',
-    backgroundColor: theme.colors.background,
-    width: '75%',
     margin: 'auto',
     maxWidth: '400px',
     padding: '30px',
@@ -88,7 +79,7 @@ const Login = () => {
   }
 
   return (
-    <StyledLoginBackdrop>
+    <PageWrapper>
       <StyledLoginContainer>
         <StyledLogoWrapper>
           <Logo width={100} height={100}/>
@@ -111,9 +102,9 @@ const Login = () => {
           handleChange={(event) => handleInputChange(event, 'pass')}/>
         
         {!!error && (
-              <div>
-                {error}
-              </div>
+          <div>
+            {error}
+          </div>
         )}
 
         <Button
@@ -137,7 +128,7 @@ const Login = () => {
         
       </StyledLoginContainer>
       
-    </StyledLoginBackdrop>
+    </PageWrapper>
   )
 };
 
