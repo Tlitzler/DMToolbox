@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
-import { useTheme } from '@emotion/react';
+import { useTheme, Theme } from '@emotion/react';
 
 export interface IButtonProps {
     children?: React.ReactNode;
@@ -10,6 +10,60 @@ export interface IButtonProps {
     height?: number;
     margin?: string;
 };
+
+interface IGeneralStyles {
+    padding: string;
+    borderRadius: string;
+    border: string;
+    cursor: string;
+    width: string;
+    height: string;
+    margin: string;
+};
+
+interface IButtonStyleProps {
+    generalStyles: IGeneralStyles; 
+    theme: Theme;
+};
+
+
+
+const PrimaryButton = styled.button(({generalStyles, theme}: IButtonStyleProps) => ({
+    backgroundColor: theme.colors.buttons.primary.background,
+    color: theme.colors.buttons.primary.color,
+    '&:hover': {
+        backgroundColor: theme.colors.buttons.primary.hover,
+    },
+    '&:active': {
+        backgroundColor: theme.colors.buttons.primary.active,
+    },
+    ...generalStyles,
+}));
+
+const SecondaryButton = styled.button(({generalStyles, theme}: IButtonStyleProps) => ({
+    backgroundColor: theme.colors.buttons.secondary.background,
+    color: theme.colors.buttons.secondary.color,
+    '&:hover': {
+        backgroundColor: theme.colors.buttons.secondary.hover,
+    },
+    '&:active': {
+        backgroundColor: theme.colors.buttons.secondary.active,
+    },
+    ...generalStyles,
+}));
+
+const IconButton = styled.button(({generalStyles, theme}: IButtonStyleProps) => ({
+    backgroundColor: theme.colors.buttons.icon.background,
+    color: theme.colors.buttons.icon.color,
+    '&:hover': {
+        backgroundColor: theme.colors.buttons.icon.hover,
+    },
+    '&:active': {
+        backgroundColor: theme.colors.buttons.icon.active,
+    },
+    ...generalStyles,
+}));
+
 const Button = ({
   children, 
   type, 
@@ -30,42 +84,6 @@ const Button = ({
         margin: margin ? margin : '0',
     };
 
-    const PrimaryButton = styled.button({
-        backgroundColor: theme.colors.buttons.primary.background,
-        color: theme.colors.buttons.primary.color,
-        '&:hover': {
-            backgroundColor: theme.colors.buttons.primary.hover,
-        },
-        '&:active': {
-            backgroundColor: theme.colors.buttons.primary.active,
-        },
-        ...generalStyles,
-    });
-
-    const SecondaryButton = styled.button({
-        backgroundColor: theme.colors.buttons.secondary.background,
-        color: theme.colors.buttons.secondary.color,
-        '&:hover': {
-            backgroundColor: theme.colors.buttons.secondary.hover,
-        },
-        '&:active': {
-            backgroundColor: theme.colors.buttons.secondary.active,
-        },
-        ...generalStyles,
-    });
-
-    const IconButton = styled.button({
-        backgroundColor: theme.colors.buttons.icon.background,
-        color: theme.colors.buttons.icon.color,
-        '&:hover': {
-            backgroundColor: theme.colors.buttons.icon.hover,
-        },
-        '&:active': {
-            backgroundColor: theme.colors.buttons.icon.active,
-        },
-        ...generalStyles,
-    });
-
     const handleClick = useCallback(() => {
         if (onClick) {
             onClick();
@@ -74,12 +92,12 @@ const Button = ({
 
     switch(type) {
         case 'secondary':
-            return <SecondaryButton onClick={handleClick}>{children}</SecondaryButton>;
+            return <SecondaryButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</SecondaryButton>;
         case 'icon':
-            return <IconButton onClick={handleClick}>{children}</IconButton>;
+            return <IconButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</IconButton>;
         case 'primary':
         default:
-            return <PrimaryButton onClick={handleClick}>{children}</PrimaryButton>;
+            return <PrimaryButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</PrimaryButton>;
     }
 };
 

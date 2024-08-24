@@ -8,37 +8,36 @@ import { selectAuthenticated } from '../../Redux/UserSlice/userSelectors';
 import { useAppSelector } from '../../Redux/hooks';
 import PageWrapper from '../../Molecules/PageWrapper';
 
+const StyledContainer = styled.div({
+  width: '65vw',
+  height: '90vh',
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '20px',
+  margin: '10px 0px',
+});
+
+const StyledBanner = styled.div({
+  height: '80px',
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  position: 'relative',
+  zIndex: 10,
+});
+
+const StyledButtonContainer = styled.div({
+  width: '300px',
+  display: 'flex',
+  justifyContent: 'space-around',
+});
+
+const LogoWrapper = styled.div({
+  margin: 'auto',
+  marginLeft: '15px', 
+});
+
 const HomeContainer = () => {
-
-  const StyledContainer = styled.div({
-    width: '65vw',
-    height: '90vh',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '20px',
-    margin: '10px 0px',
-  });
-  
-  const StyledBanner = styled.div({
-    height: '80px',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-    position: 'relative',
-    zIndex: 10,
-  });
-  
-  const StyledButtonContainer = styled.div({
-    width: '300px',
-    display: 'flex',
-    justifyContent: 'space-around',
-  });
-  
-  const LogoWrapper = styled.div({
-    margin: 'auto',
-    marginLeft: '15px', 
-  });
-
   const authenticated = useAppSelector(selectAuthenticated);
   console.log('CUSTOM LOG authenticated', authenticated);
 

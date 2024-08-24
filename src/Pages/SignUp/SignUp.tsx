@@ -8,6 +8,34 @@ import { addUser } from './api/addUser';
 import { IUserObject } from '../../Atoms/Types';
 import PageWrapper from '../../Molecules/PageWrapper';
 
+const StyledSignUpContainer = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '20px',
+  width: '75%',
+  margin: 'auto',
+  maxWidth: '400px',
+  padding: '20px',
+});
+
+const StyledLogoWrapper = styled.div({
+  margin: 'auto',
+  marginTop: '10px'
+});
+
+const StyledTitleText = styled.h1({
+  fontSize: '30px',
+  margin: 'auto',
+});
+
+const StyledSubtitleText = styled.h3({
+  fontSize: '15px',
+  margin: 'auto 30px',
+  textAlign: 'center',
+  fontWeight: 600,
+});
+
 const SignUp = () => {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
@@ -16,34 +44,6 @@ const SignUp = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const [successfulAdd, setSuccessfulAdd] = useState(false);
-
-  const StyledSignUpContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    gap: '20px',
-    width: '75%',
-    margin: 'auto',
-    maxWidth: '400px',
-    padding: '20px',
-  });
-  
-  const StyledLogoWrapper = styled.div({
-    margin: 'auto',
-    marginTop: '10px'
-  });
-  
-  const StyledTitleText = styled.h1({
-    fontSize: '30px',
-    margin: 'auto',
-  });
-  
-  const StyledSubtitleText = styled.h3({
-    fontSize: '15px',
-    margin: 'auto 30px',
-    textAlign: 'center',
-    fontWeight: 600,
-  });
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>, field: 'firstname' | 'lastname' | 'email' | 'pass' | 'confirm') => {
     const target = event.target as HTMLInputElement;

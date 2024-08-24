@@ -9,58 +9,59 @@ export interface IPageWrapperProps {
     rightElement?: React.ReactNode;
 };
 
+const StyledLeftWrapper = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '90vh',
+    width: '15vw',
+});
+
+const StyledRightWrapper = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '90vh',
+    width: '15vw',
+});
+
+const StyledPageWrapper = styled.div({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: '90vh',
+    width: '100%',
+});
+
+const StyledContainer = styled.div({
+    width: '65vw',
+    height: '90vh',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '20px',
+    margin: '10px 0px',
+});
+
 const PageWrapper = ({
     leftElement,
     children,
     rightElement,
 }: IPageWrapperProps) => {
-    const StyledLeftWrapper = styled.div({
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        height: '90vh',
-        width: '15vw',
-    });
-
-    const StyledRightWrapper = styled.div({
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        height: '90vh',
-        width: '15vw',
-    });
-
-    const StyledPageWrapper = styled.div({
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: '90vh',
-        width: '100%',
-    });
-
-    const StyledContainer = styled.div({
-        width: '65vw',
-        height: '90vh',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '20px',
-        margin: '10px 0px',
-      });
 
     return (
         <Backdrop>
             <StyledPageWrapper>
-                <div>
+                <StyledLeftWrapper>
                     {leftElement}
-                </div>
+                </StyledLeftWrapper>
                 <Parchment>
                     <StyledContainer>
                         {children}
                     </StyledContainer>
                 </Parchment>
-                <div>
+                <StyledRightWrapper>
                     {rightElement}
-                </div>
+                </StyledRightWrapper>
             </StyledPageWrapper>
         </Backdrop>
     );

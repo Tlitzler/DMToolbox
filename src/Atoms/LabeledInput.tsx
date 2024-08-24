@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-export interface LabeledInputProps {
+export interface ILabeledInputProps {
   label?: string;
   value: string;
   handleChange: (event: React.FormEvent<HTMLInputElement>) => void;
@@ -10,14 +10,14 @@ export interface LabeledInputProps {
   hideText?: boolean;
 };
 
-interface WrapperProps {
+interface IWrapperProps {
   width?: number;
   height: number;
 }
 
-const StyledInputWrapper = styled.div((props: WrapperProps) => ({
-  width: `${props.width}px`,
-  height: `${props.height}px`,
+const StyledInputWrapper = styled.div(({width, height}: IWrapperProps) => ({
+  width: `${width}px`,
+  height: `${height}px`,
   display: 'flex',
   flexDirection: 'column',
 }));
@@ -37,7 +37,7 @@ const LabeledInput = ({
   width,
   height = 50,
   hideText,
-}: LabeledInputProps) => {
+}: ILabeledInputProps) => {
   return (
     <StyledInputWrapper 
       height={height}

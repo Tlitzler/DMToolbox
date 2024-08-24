@@ -11,6 +11,30 @@ import { useAppDispatch } from '../../Redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import PageWrapper from '../../Molecules/PageWrapper';
+  
+const StyledLoginContainer = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '20px',
+  margin: 'auto',
+  maxWidth: '400px',
+  padding: '30px',
+});
+
+const StyledLogoWrapper = styled.div({
+  margin: 'auto',
+  marginTop: '10px'
+});
+
+const StyledForgotPassword = styled(Link)({
+  margin: 'auto',
+});
+
+const StyledTitleText = styled.h1({
+  fontSize: '30px',
+  margin: 'auto',
+});  
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -23,30 +47,6 @@ const Login = () => {
 
   const user = useSelector(selectUser);
   console.log('CUSTOM LOG testing', user);
-  
-  const StyledLoginContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    gap: '20px',
-    margin: 'auto',
-    maxWidth: '400px',
-    padding: '30px',
-  });
-  
-  const StyledLogoWrapper = styled.div({
-    margin: 'auto',
-    marginTop: '10px'
-  });
-  
-  const StyledForgotPassword = styled(Link)({
-    margin: 'auto',
-  });
-  
-  const StyledTitleText = styled.h1({
-    fontSize: '30px',
-    margin: 'auto',
-  });  
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>, field: 'email' | 'pass') => {
     const target = event.target as HTMLInputElement;
