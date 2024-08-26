@@ -10,11 +10,11 @@ const StyledContainer = styled.div({
   justifyContent: 'center',
   flexDirection: 'row',
   alignItems: 'center',
+  fontFamily: 'KingthingsPetrock',
 });
 
 const SplashPageContainer = () => {
   const theme = useTheme();
-  
 
   return (
     <StyledContainer>

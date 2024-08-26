@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'KingthingsPetrock';
+  src: local('Kingthings_Petrock'), url(./Theme/Fonts/Kingthings_Petrock.ttf) format('truetype');
+}

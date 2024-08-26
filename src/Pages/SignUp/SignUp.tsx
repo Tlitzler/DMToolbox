@@ -17,6 +17,7 @@ const StyledSignUpContainer = styled.div({
   margin: 'auto',
   maxWidth: '400px',
   padding: '20px',
+  fontFamily: 'KingthingsPetrock',
 });
 
 const StyledLogoWrapper = styled.div({
@@ -27,6 +28,7 @@ const StyledLogoWrapper = styled.div({
 const StyledTitleText = styled.h1({
   fontSize: '30px',
   margin: 'auto',
+  fontFamily: 'KingthingsPetrock',
 });
 
 const StyledSubtitleText = styled.h3({
@@ -34,6 +36,13 @@ const StyledSubtitleText = styled.h3({
   margin: 'auto 30px',
   textAlign: 'center',
   fontWeight: 600,
+  fontFamily: 'KingthingsPetrock',
+});
+
+const StyledErrorText = styled.div({
+  margin: 'auto',
+  fontFamily: 'KingthingsPetrock',
+  fontSize: '20px',
 });
 
 const SignUp = () => {
@@ -72,7 +81,9 @@ const SignUp = () => {
   const submitSignup = () => {
     console.log('BIG TO DO !!!!!!! Need to hash this password before sending it to the BE :: ', password);
     console.log(password, passwordConfirm, password === passwordConfirm);
-    if (password !== passwordConfirm) {
+    if (firstname === '' || lastname === '' || email === '' || password === '' || passwordConfirm === '') {
+      setError('Please fill out all fields.');
+    } else if (password !== passwordConfirm) {
       setError('Password and password confirmation do not match.');
     } else if (password.length < 1) {
       setError('Password is too short.');
@@ -102,7 +113,7 @@ const SignUp = () => {
           </StyledSubtitleText>
           <Link to="/login">
             <Button
-              width={400}
+              width="400px"
               margin="10px auto">
                 Log in
             </Button>
@@ -120,49 +131,54 @@ const SignUp = () => {
             Welcome to the DM Toolbox! Fill out the form below to create your free account.
           </StyledSubtitleText>
           <LabeledInput
-            height={60}
+            height="60px"
             label={'First Name'}
             value={firstname}
-            handleChange={(event) => handleInputChange(event, 'firstname')}/>
+            onChange={(event) => handleInputChange(event, 'firstname')}
+            submitForm={submitSignup}/>
           <LabeledInput
-            height={60}
+            height="60px"
             label={'Last Name'}
             value={lastname}
-            handleChange={(event) => handleInputChange(event, 'lastname')}/>
+            onChange={(event) => handleInputChange(event, 'lastname')}
+            submitForm={submitSignup}/>
           <LabeledInput
-            height={60}
+            height="60px"
             label={'Email'}
             value={email}
-            handleChange={(event) => handleInputChange(event, 'email')}/>
+            onChange={(event) => handleInputChange(event, 'email')}
+            submitForm={submitSignup}/>
           <LabeledInput
-            height={60}
-            hideText
+            height="60px"
+            type="password"
             label={'Password'}
             value={password}
-            handleChange={(event) => handleInputChange(event, 'pass')}/>
+            onChange={(event) => handleInputChange(event, 'pass')}
+            submitForm={submitSignup}/>
           <LabeledInput
-            height={60}
-            hideText
+            height="60px"
+            type="password"
             label={'Confirm Password'}
             value={passwordConfirm}
-            handleChange={(event) => handleInputChange(event, 'confirm')}/>
+            onChange={(event) => handleInputChange(event, 'confirm')}
+            submitForm={submitSignup}/>
             <Button
-              width={400}
+              width="400px"
               margin="10px auto"
               onClick={submitSignup}>
               Sign up
             </Button>
             <Link to="/login">
               <Button
-                width={400}
+                width="400px"
                 margin="10px auto">
                 Log in
               </Button>
             </Link>
             {!!error && (
-              <div>
+              <StyledErrorText>
                 {error}
-              </div>
+              </StyledErrorText>
             )}
         </StyledSignUpContainer>
       )}

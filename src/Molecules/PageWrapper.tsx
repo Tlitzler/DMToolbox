@@ -14,7 +14,8 @@ const StyledLeftWrapper = styled.div({
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '90vh',
-    width: '15vw',
+    width: '14vw',
+    marginRight: '1vw',
 });
 
 const StyledRightWrapper = styled.div({
@@ -40,6 +41,10 @@ const StyledContainer = styled.div({
     flexDirection: 'column',
     padding: '20px',
     margin: '10px 0px',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    scrollbarColor: '#aaaaaa transparent',
+    scrollbarWidth: 'thin',
 });
 
 const PageWrapper = ({

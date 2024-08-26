@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import logo from '../logo.svg';
+import logo from '../Theme/Images/logo.png';
 import { Link } from 'react-router-dom';
 
 interface StyleProps {

@@ -29,12 +29,21 @@ const StyledLogoWrapper = styled.div({
 
 const StyledForgotPassword = styled(Link)({
   margin: 'auto',
+  fontFamily: 'KingthingsPetrock',
+  fontSize: '16px',
 });
 
 const StyledTitleText = styled.h1({
   fontSize: '30px',
   margin: 'auto',
+  fontFamily: 'KingthingsPetrock',
 });  
+
+const StyledErrorText = styled.div({
+  margin: 'auto',
+  fontFamily: 'KingthingsPetrock',
+  fontSize: '20px',
+});
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -90,25 +99,27 @@ const Login = () => {
         </StyledTitleText>
         
         <LabeledInput
-          height={60}
+          height="60px"
           label={'Email'}
           value={email}
-          handleChange={(event) => handleInputChange(event, 'email')}/>
+          onChange={(event) => handleInputChange(event, 'email')}
+          submitForm={submitLogin}/>
         <LabeledInput
-          height={60}
-          hideText
+          height="60px"
+          type="password"
           label={'Password'}
           value={password}
-          handleChange={(event) => handleInputChange(event, 'pass')}/>
+          onChange={(event) => handleInputChange(event, 'pass')}
+          submitForm={submitLogin}/>
         
         {!!error && (
-          <div>
+          <StyledErrorText>
             {error}
-          </div>
+          </StyledErrorText>
         )}
 
         <Button
-          width={400}
+          width="400px"
           onClick={submitLogin}
           margin="10px auto">
             Log in
@@ -116,7 +127,7 @@ const Login = () => {
         
         <Link to="/sign-up">
           <Button 
-            width={400}
+            width="400px"
             margin="10px auto">
               Sign up
           </Button>

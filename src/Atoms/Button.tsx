@@ -4,11 +4,13 @@ import { useTheme, Theme } from '@emotion/react';
 
 export interface IButtonProps {
     children?: React.ReactNode;
-    type?: 'primary' | 'secondary' | 'icon'; 
+    type?: 'primary' | 'secondary' | 'icon' | 'text' | 'image'; 
     onClick?: () => void;
-    width?: number;
-    height?: number;
+    width?: string;
+    height?: string;
     margin?: string;
+    imageSource?: string;
+    hoverSource?: string;
 };
 
 interface IGeneralStyles {
@@ -19,14 +21,15 @@ interface IGeneralStyles {
     width: string;
     height: string;
     margin: string;
+    fontFamily?: string;
 };
 
 interface IButtonStyleProps {
     generalStyles: IGeneralStyles; 
     theme: Theme;
+    imageSource?: string;
+    hoverSource?: string;
 };
-
-
 
 const PrimaryButton = styled.button(({generalStyles, theme}: IButtonStyleProps) => ({
     backgroundColor: theme.colors.buttons.primary.background,
@@ -64,24 +67,51 @@ const IconButton = styled.button(({generalStyles, theme}: IButtonStyleProps) => 
     ...generalStyles,
 }));
 
+const TextButton = styled.button(({generalStyles, theme}: IButtonStyleProps) => ({
+    background: 'transparent',
+    '&:hover': {
+        color: theme.colors.buttons.icon.hover,
+    },
+    '&:active': {
+        backgroundColor: theme.colors.buttons.icon.active,
+    },
+    fontSize: '150%',
+    ...generalStyles,
+}));
+
+const ImageButton = styled.button(({generalStyles, theme, imageSource, hoverSource}: IButtonStyleProps) => ({
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${imageSource})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    '&:hover': {
+        backgroundImage: `url(${hoverSource})`,
+    },
+    ...generalStyles,
+}));
+
 const Button = ({
-  children, 
-  type, 
-  onClick, 
-  width, 
-  height,
-  margin,
+    children, 
+    type, 
+    onClick, 
+    width, 
+    height,
+    margin,
+    imageSource,
+    hoverSource,
 }: IButtonProps) => {
     const theme = useTheme();
 
     const generalStyles = {
-        padding: '10px',
+        padding: type === 'text' ? '0' : '10px',
         borderRadius: '5px',
         border: 'none',
         cursor: 'pointer',
-        width: width ? `${width}px` : 'auto',
-        height: height ? `${height}px` : 'auto',
+        width: width ? width : 'auto',
+        height: height ? height : 'auto',
         margin: margin ? margin : '0',
+        fontFamily: 'KingthingsPetrock',
     };
 
     const handleClick = useCallback(() => {
@@ -95,6 +125,10 @@ const Button = ({
             return <SecondaryButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</SecondaryButton>;
         case 'icon':
             return <IconButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</IconButton>;
+        case 'text':
+            return <TextButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</TextButton>;
+        case 'image':
+            return <ImageButton onClick={handleClick} generalStyles={generalStyles} theme={theme} imageSource={imageSource} hoverSource={hoverSource}>{children}</ImageButton>;
         case 'primary':
         default:
             return <PrimaryButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</PrimaryButton>;

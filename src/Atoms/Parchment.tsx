@@ -21,7 +21,7 @@ interface IStyledParchmentProps {
 const StyledParchment = styled.div(({margin}: IStyledParchmentProps) => ({
     position: 'fixed',
     left: '15%',
-    width: '70%',
+    width: '70vw',
     height: '99%',
     backgroundColor: '#fffef0',
     borderRadius: '5px',

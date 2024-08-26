@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './Theme/Fonts/Kingthings_Petrock.ttf';
 import HomeContainer from './Pages/Home/HomeContainer';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';

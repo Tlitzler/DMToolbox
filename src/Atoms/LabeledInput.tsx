@@ -1,47 +1,68 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import ParchmentTexture from '../Theme/Images/ParchmentTexture.png';
 
 export interface ILabeledInputProps {
   label?: string;
-  value: string;
-  handleChange: (event: React.FormEvent<HTMLInputElement>) => void;
-  width?: number;
-  height?: number;
-  hideText?: boolean;
+  value: string | number;
+  onChange: (event: any) => void;
+  width?: string;
+  height?: string;
+  type?: 'text' | 'password' | 'number';
+  min?: number;
+  max?: number;
+  submitForm?: () => void;
 };
 
 interface IWrapperProps {
-  width?: number;
-  height: number;
+  width?: string;
+  height: string;
 }
 
 const StyledInputWrapper = styled.div(({width, height}: IWrapperProps) => ({
-  width: `${width}px`,
-  height: `${height}px`,
+  width: width,
+  height: height,
   display: 'flex',
   flexDirection: 'column',
 }));
 
 const StyledInputLabel = styled.label({
   height: '20px',
+  fontFamily: 'KingthingsPetrock',
+  fontSize: '16px',
 });
 
 const StyledInput = styled.input({
+  backgroundColor: '#fffef0',
+  backgroundImage: `url(${ParchmentTexture})`,
   height: '100%',
+  ":focus": {
+    outline: '2px solid #C4A484',
+  },
+  fontFamily: 'KingthingsPetrock',
+  fontSize: '16px',
 });
 
 const LabeledInput = ({
   label,
   value,
-  handleChange,
+  onChange,
   width,
-  height = 50,
-  hideText,
+  height = '50px',
+  type,
+  min,
+  max,
+  submitForm,
 }: ILabeledInputProps) => {
   return (
     <StyledInputWrapper 
       height={height}
-      width={width}>
+      width={width}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && submitForm) {
+          submitForm();
+        }
+      }}>
         {label && (
           <StyledInputLabel>
             {label}
@@ -49,8 +70,10 @@ const LabeledInput = ({
         )}
         <StyledInput 
           value={value}
-          onChange={handleChange}
-          type={hideText ? 'password' : 'false'}/>
+          onChange={onChange}
+          type={type}
+          min={min}
+          max={max}/>
     </StyledInputWrapper>
   )
 };

@@ -17,10 +17,10 @@ const themeList: Theme[] = [
             },
             buttons: {
                 primary: {
-                    background: '#007bff',
+                    background: '#303030',
                     color: '#ffffff',
-                    hover: '#0056b3',
-                    active: '#008bff',
+                    hover: '#1f1f1f',
+                    active: '#000000',
                 },
                 secondary: {
                     background: '#6c757d',
