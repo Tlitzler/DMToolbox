@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
+import mapTest from '../../Theme/Images/mapTest.jpg';
 
 const StyledContainer = styled.div({
   width: '100%',
@@ -13,12 +14,22 @@ const StyledContainer = styled.div({
   fontFamily: 'KingthingsPetrock',
 });
 
+const StyledTestContent = styled.div({
+  width: '60vw',
+  height: '70vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
 const SplashPageContainer = () => {
   const theme = useTheme();
 
   return (
     <StyledContainer>
-      Splash page goes here
+      <StyledTestContent>
+        Nothing goes here yet! Hooray for splash pages! 🥳
+      </StyledTestContent>
     </StyledContainer>
   )
 };

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { authenticateAPI } from '../api/authenticateAPI';
+import { authenticateAPI } from '../../../Redux/UserSlice/api/authenticateAPI';
 
 export const authenticateThunk = createAsyncThunk(
   'user/authenticate',

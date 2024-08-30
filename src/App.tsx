@@ -6,6 +6,7 @@ import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
 import { ThemeProvider } from '@emotion/react';
 import themeList from './Theme/theme';
+import CampaignPage from './Pages/Campaign/CampaignPage';
 
 import {
   BrowserRouter as Router,
@@ -30,6 +31,10 @@ const  App = () => {
 
           <Route path="/" element={
             <HomeContainer/>
+          }/>
+
+          <Route path="/campaign" element={
+            <CampaignPage/>
           }/>
 
           <Route path="*" element={

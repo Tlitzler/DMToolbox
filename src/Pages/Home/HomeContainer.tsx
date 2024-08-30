@@ -7,13 +7,6 @@ import Button from '../../Atoms/Button';
 import { selectAuthenticated } from '../../Redux/UserSlice/userSelectors';
 import { useAppSelector } from '../../Redux/hooks';
 import PageWrapper from '../../Molecules/PageWrapper';
-import Toolbar, { IToolbarOption } from '../../Molecules/Toolbar';
-import Draggable from '../../Atoms/Draggable';
-import DiceRoller from '../../Molecules/DiceRoller';
-import diceRow from '../../Theme/Images/diceRow.png';
-import diceRowHover from '../../Theme/Images/diceRowHover.png';
-import diceRowActive from '../../Theme/Images/diceRowActive.png';
-import diceRowActiveHover from '../../Theme/Images/diceRowActiveHover.png';
 
 const StyledContainer = styled.div({
   width: '65vw',
@@ -44,84 +37,67 @@ const LogoWrapper = styled.div({
   marginLeft: '15px', 
 });
 
-const StyledWidgetWrapper = styled.div({
-  zIndex: 100,
-});
-
 const HomeContainer = () => {
-  const [displayDiceRoller, setDisplayDiceRoller] = useState(false);
-
   const authenticated = useAppSelector(selectAuthenticated);
   console.log('CUSTOM LOG authenticated', authenticated);
 
-  const toolbarOptions: IToolbarOption[] = [
-    {
-      text: 'Dice Roller',
-      id: 'dice',
-      component: (
-        <Draggable key={'dice'} onClose={() => setDisplayDiceRoller(false)} defaultPosition={{x: 300, y: 0, width: 320, height: 200}}>
-          <DiceRoller/>
-        </Draggable>
-      ),
-      onClick: () => setDisplayDiceRoller(!displayDiceRoller),
-      visible: displayDiceRoller,
-      imageSource: displayDiceRoller ? diceRowActive : diceRow,
-      hoverSource: displayDiceRoller ? diceRowActiveHover : diceRowHover,
-    },
-  ]; 
-
   return (
-    <>
-      <PageWrapper leftElement={<Toolbar options={toolbarOptions} location="left"/>}>
-        <StyledContainer>
-          <StyledBanner>
-            <LogoWrapper>
-              <Logo/>
-            </LogoWrapper>
-
-            {!!authenticated ? (
-              <div>
-                <StyledButtonContainer>
-                  <Link to="/profile">
-                    <Button margin="20px auto">
-                      Profile
-                    </Button>
-                  </Link>
-
-                  <Button onClick={() => console.log('Would be logging out')}>
-                    Log out
+    <PageWrapper>
+        {!!authenticated ? (
+          <StyledContainer>
+            <StyledBanner>
+              <LogoWrapper>
+                <Logo/>
+              </LogoWrapper>
+              <StyledButtonContainer>
+                <Link to="/profile">
+                  <Button margin="20px auto">
+                    Profile
                   </Button>
-                  
-                </StyledButtonContainer>
-              </div>
-            ) : (
+                </Link>
+                <Button onClick={() => console.log('Would be logging out')}>
+                  Log out
+                </Button>
+              </StyledButtonContainer>
+            </StyledBanner>
+            <Link to="/campaign">
+              <Button>
+                Create a new campaign
+              </Button>
+            </Link>
+            Your Campaigns: 
+            <div>
+              Campaigns go here
+              <Link to="/campaign">
+                <Button>
+                  This is a dummy campaign, click to view
+                </Button>
+              </Link>
+            </div>
+          </StyledContainer>
+        ) : (
+          <StyledContainer>
+            <StyledBanner>
+              <LogoWrapper>
+                <Logo/>
+              </LogoWrapper>
               <StyledButtonContainer>
                 <Link to="/sign-up">
                   <Button margin="20px auto">
                     Sign up
                   </Button>
                 </Link>
-                      
                 <Link to="/login">
                   <Button margin="20px auto">
                     Log in
                   </Button>
                 </Link>
-                
               </StyledButtonContainer>
-            )}
-            
-          </StyledBanner>
-          
-          <SplashPageContainer/>
-          
-        </StyledContainer>
-        <StyledWidgetWrapper>
-      </StyledWidgetWrapper>
-      </PageWrapper>
-
-
-    </>
+            </StyledBanner>
+            <SplashPageContainer/>
+          </StyledContainer>
+        )}
+    </PageWrapper>
   )
 };
 

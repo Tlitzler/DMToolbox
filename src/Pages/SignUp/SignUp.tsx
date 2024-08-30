@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import LabeledInput from '../../Atoms/LabeledInput';
 import Button from '../../Atoms/Button';
 import { Link } from 'react-router-dom';
-import { addUser } from './api/addUser';
-import { IUserObject } from '../../Atoms/Types';
+import { addUser } from '../../Redux/UserSlice/api/addUser';
+import { IUserObject } from '../../Redux/Types/user';
 import PageWrapper from '../../Molecules/PageWrapper';
 
 const StyledSignUpContainer = styled.div({
