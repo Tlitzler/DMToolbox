@@ -1,6 +1,7 @@
 export interface ICharacterObject {
     name: string;
     imageId?: number;
+    isPlayer?: boolean;
     description?: string;
     id: number;
     factionIds?: number[];
@@ -10,6 +11,12 @@ export interface ICharacterObject {
     status?: string;
     hp: number;
     level: number;
+    class?: string[];
+    itemIds?: number[];
+    platinum?: number;  // amount of platinum carried by character
+    gold?: number; // amount of gold carried by character
+    siler?: number; // amount of silver carried by character
+    copper?: number; // amount of copper carried by character
 };
 
 export interface IEnemyObject {
@@ -20,10 +27,13 @@ export interface IEnemyObject {
     imageId?: number;
     factionIds?: number[];
     hp: number;
+    itemIds?: number[]; // typically magic or special items
+    loot?: string; // mundane items or gold
 };
 
 export interface IHazardObject {
     name: string;
+    id: number;
     type: string;
     description?: string;
     imageId?: number;
@@ -33,10 +43,11 @@ export interface IHazardObject {
 
 export interface IEncounterObject {
     name?: string;
+    id: number;
     type?: string;
     challengeRating: number;
-    enemies: IEnemyObject[];
-    hazards: IHazardObject[];
+    enemyIds: number[];
+    hazardIds: number[];
     environment?: string;
 };
 
@@ -46,23 +57,23 @@ export interface IEntounterTableObject {
     type: string;
     environments?: string[];
     locationIds?: number[];
-    encounterList: IEncounterObject[];
+    encounterIds: number[];
 };
 
 export interface IFactionObject {
     name: string;
+    id: number;
     imageId?: number;
     description?: string;
-    id: number;
-    characterIdList: number[];
-    enemyIdList: number[];
-    eventIdList: number[];
+    characterIds: number[];
+    enemyIds: number[];
+    eventIds: number[];
 };
 
 export interface IEventObject {
     name: string;
-    description?: string;
     id: number;
+    description?: string;
     factions?: {
         factionId: number;
         involvement: string;
@@ -82,47 +93,83 @@ export interface IEventObject {
 
 export interface ILocationObject {
     name: string;
-    imageId?: number;
-    description?: string;
     id: number;
-    characterIdList?: number[];
-    eventIdList?: number[];
-    factionIdList?: number[];
-    encounterTableId?: number;
+    imageId?: number; // This image is used similarly to roll20 windows with the image and text below
+    description?: string;
+    characterIds?: number[];
+    eventIds?: number[];
+    factionIds?: number[];
+    encounterTableIds?: number[];
     mapId?: number;
+    mapIconId?: number; // This image is used as a map icon, a few will be available to all users or users can upload their own
+    iconSize?: number; // How much the icon should be scaled, defaults to 1
+    x?: number;
+    y?: number;
 };
 
 export interface IMapObject {
     name: string;
+    id: number;
     imageId?: number;
     description?: string;
-    id: number;
     locationId?: number; // If this is set, this map is a submap and will not appear in the base map selection unless expanded in the toolbar perhaps
-    locationList: ILocationObject[];
+    locationIds: number[];
+    hexes?: boolean;
+    width?: number; // in squares or hexes
+    height?: number; // in squares or hexes
+    scale?: number; // number of feet per square or hex, defaults to 5
 };
 
 export interface IPartyObject {
     name: string;
+    id: number;
     imageId?: number;
     tokenImageId?: number;
     description?: string;
-    id: number;
-    characterList?: ICharacterObject[];
-    enemyList?: IEnemyObject[];
-    factionList?: IFactionObject[];
+    characterIds?: number[];
+    enemyIds?: number[];
+    factionIds?: number[];
+    mapId?: number; // If this is set, this party is on a map
+    x?: number; // the x location of the party on the map, if the map is a grid it's in squares. Otherwise it's in pixels or something
+    y?: number;// same as x
     locationId?: number;
+};
+
+export interface IItemObject {
+    name: string;
+    id: number;
+    descrlption?: string;
+    imageId?: number;
+    function: string;
+    value: number;
+}
+
+export interface IFolderObject {
+    name: string;
+    id: number;
+    contents?: {
+        type: string;
+        id: number;
+    }[];
 };
 
 export interface ICampaignObject {
     userId: number;
     name: string;
+    id: number;
     imageId?: number;
     description: string;
-    id: number;
-    characterList: ICharacterObject[];
-    encounterTableList: IEntounterTableObject[];
-    factionList: IFactionObject[];
+    characters: ICharacterObject[];
+    enemies: IEnemyObject[];
+    hazards: IHazardObject[];
+    encounters: IEncounterObject[];
+    encounterTables: IEntounterTableObject[];
+    factions: IFactionObject[];
+    events: IEventObject[];
+    locations: ILocationObject[];
+    maps: IMapObject[];
+    parties: IPartyObject[];
+    items: IItemObject[];
+    folders: IFolderObject[];
     date: string;
-    mapList: IMapObject[];
-    partyList: IPartyObject[];
 };

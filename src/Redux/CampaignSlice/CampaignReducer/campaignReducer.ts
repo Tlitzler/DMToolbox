@@ -2,23 +2,30 @@ import { createReducer } from '@reduxjs/toolkit';
 import { ICampaignObject } from '../../Types/campaign';
 
 interface ICampaignSlice {
-    campaignList: ICampaignObject[];
+    campaigns: ICampaignObject[];
     selectedCampaign: ICampaignObject;
 };
 
 const initialState: ICampaignSlice = {
-    campaignList: [],
+    campaigns: [],
     selectedCampaign: {
-        name: '',
-        description: '',
-        id: 1,
-        characterList: [],
-        encounterTableList: [],
-        factionList: [],
-        date: '',
-        mapList: [],
-        partyList: [],
         userId: 0,
+        name: '',
+        id: 1,
+        description: '',
+        characters: [],
+        enemies: [],
+        hazards: [],
+        encounters: [],
+        encounterTables: [],
+        factions: [],
+        events: [],
+        locations: [],
+        maps: [],
+        parties: [],
+        items: [],
+        folders: [],
+        date: '',
     },
 };
 
