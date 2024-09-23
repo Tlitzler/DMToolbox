@@ -1,8 +1,10 @@
 import {userReducer} from './UserSlice/UserReducer/userReducer';
+import { campaignsReducer } from './CampaignSlice/CampaignReducer/campaignsReducer';
 import {configureStore} from '@reduxjs/toolkit';
 
 const rootReducer = {
   user: userReducer,
+  campaigns: campaignsReducer,
 };
 
 const store = configureStore({ reducer: rootReducer });

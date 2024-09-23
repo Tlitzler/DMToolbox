@@ -16,7 +16,7 @@ const StyledContainer = styled.div({
 
 const StyledTestContent = styled.div({
   width: '60vw',
-  height: '70vh',
+  height: '65vh',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

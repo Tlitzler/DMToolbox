@@ -7,44 +7,54 @@ import SignUp from './Pages/SignUp/SignUp';
 import { ThemeProvider } from '@emotion/react';
 import themeList from './Theme/theme';
 import CampaignPage from './Pages/Campaign/CampaignPage';
+import CampaignCreatorPage from './Pages/CampaignCreator/CampaignCreatorPage';
+import { useAppSelector } from './Redux/hooks';
+import { selectAuthenticated } from './Redux/UserSlice/userSelectors';
 
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
 } from "react-router-dom";
 
 const  App = () => {
-  return (
-    <ThemeProvider theme={themeList[0]}>
-      <Router>
+    const authenticated = useAppSelector(selectAuthenticated);
 
-        <Routes>
-          <Route path="/login" element={
-            <Login/>
-          }/>
+    return (
+        <ThemeProvider theme={themeList[0]}>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={
+                        <Login/>
+                    }/>
 
-          <Route path="/sign-up" element={
-            <SignUp/>
-          }/>
+                    <Route path="/sign-up" element={
+                        <SignUp/>
+                    }/>
 
-          <Route path="/" element={
-            <HomeContainer/>
-          }/>
+                    <Route path="/" element={
+                        <HomeContainer/>
+                    }/>
 
-          <Route path="/campaign" element={
-            <CampaignPage/>
-          }/>
+                    <Route path="/campaign" element={authenticated ?
+                        <CampaignPage/> :
+                        <Navigate to="/login" replace/>
+                    }/>
 
-          <Route path="*" element={
-            <Navigate to="/" replace/>
-          }/>
+                    <Route path="/create-campaign" element={ authenticated ?
+                        <CampaignCreatorPage/> :
+                        <Navigate to="/login" replace/>
+                    }/>
 
-        </Routes>
-      </Router>
-    </ThemeProvider>
-  );
+                    <Route path="*" element={
+                        <Navigate to="/" replace/>
+                    }/>
+
+                </Routes>
+            </Router>
+        </ThemeProvider>
+    );
 }
 
 export default App;

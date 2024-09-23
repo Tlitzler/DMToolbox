@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import LabeledInput from '../../Atoms/LabeledInput';
 import Button from '../../Atoms/Button';
 import { Link } from 'react-router-dom';
-import { addUser } from '../../Redux/UserSlice/api/addUser';
+import { addUser } from '../../Redux/UserSlice/api/addUserAPI';
 import { IUserObject } from '../../Redux/Types/user';
 import PageWrapper from '../../Molecules/PageWrapper';
 

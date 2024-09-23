@@ -158,6 +158,7 @@ export interface ICampaignObject {
     name: string;
     id: number;
     imageId?: number;
+    previewImageId?: number;
     description: string;
     characters: ICharacterObject[];
     enemies: IEnemyObject[];
