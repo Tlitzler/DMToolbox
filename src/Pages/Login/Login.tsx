@@ -55,7 +55,6 @@ const Login = () => {
   const theme = useTheme();
 
   const user = useSelector(selectUser);
-  console.log('CUSTOM LOG testing', user);
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>, field: 'email' | 'pass') => {
     const target = event.target as HTMLInputElement;

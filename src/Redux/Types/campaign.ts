@@ -1,6 +1,6 @@
 export interface ICharacterObject {
     name: string;
-    imageId?: number;
+    imageURL?: string;
     isPlayer?: boolean;
     description?: string;
     id: number;
@@ -24,7 +24,7 @@ export interface IEnemyObject {
     id: number;
     challengeRating: number;
     description?: string;
-    imageId?: number;
+    imageURL?: string;
     factionIds?: number[];
     hp: number;
     itemIds?: number[]; // typically magic or special items
@@ -36,7 +36,7 @@ export interface IHazardObject {
     id: number;
     type: string;
     description?: string;
-    imageId?: number;
+    imageURL?: string;
     multiplier?: boolean;
     challengeModifier: number;
 };
@@ -63,7 +63,7 @@ export interface IEntounterTableObject {
 export interface IFactionObject {
     name: string;
     id: number;
-    imageId?: number;
+    imageURL?: string;
     description?: string;
     characterIds: number[];
     enemyIds: number[];
@@ -94,7 +94,7 @@ export interface IEventObject {
 export interface ILocationObject {
     name: string;
     id: number;
-    imageId?: number; // This image is used similarly to roll20 windows with the image and text below
+    imageURL?: string; // This image is used similarly to roll20 windows with the image and text below
     description?: string;
     characterIds?: number[];
     eventIds?: number[];
@@ -110,7 +110,7 @@ export interface ILocationObject {
 export interface IMapObject {
     name: string;
     id: number;
-    imageId?: number;
+    imageURL?: string;
     description?: string;
     locationId?: number; // If this is set, this map is a submap and will not appear in the base map selection unless expanded in the toolbar perhaps
     locationIds: number[];
@@ -123,8 +123,8 @@ export interface IMapObject {
 export interface IPartyObject {
     name: string;
     id: number;
-    imageId?: number;
-    tokenImageId?: number;
+    imageURL?: string;
+    tokenimageURL?: string;
     description?: string;
     characterIds?: number[];
     enemyIds?: number[];
@@ -139,7 +139,7 @@ export interface IItemObject {
     name: string;
     id: number;
     descrlption?: string;
-    imageId?: number;
+    imageURL?: string;
     function: string;
     value: number;
 }
@@ -157,8 +157,7 @@ export interface ICampaignObject {
     userId: number;
     name: string;
     id: number;
-    imageId?: number;
-    previewImageId?: number;
+    imageURL?: string; // preview image, not map image
     description: string;
     characters: ICharacterObject[];
     enemies: IEnemyObject[];

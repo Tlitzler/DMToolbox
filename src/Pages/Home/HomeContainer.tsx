@@ -47,8 +47,6 @@ const HomeContainer = () => {
     const authenticated = useAppSelector(selectAuthenticated);
     const dispatch = useAppDispatch();
 
-    console.log('CUSTOM LOG authenticated', authenticated);
-
     return (
         <PageWrapper>
             {!!authenticated ? (

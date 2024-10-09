@@ -8,7 +8,7 @@ export interface ILabeledInputProps {
     onChange: (event: any) => void;
     width?: string;
     height?: string;
-    type?: 'text' | 'password' | 'number' | 'longtext';
+    type?: 'text' | 'password' | 'number' | 'longtext' | 'file';
     min?: number;
     max?: number;
     submitForm?: () => void;
@@ -56,6 +56,12 @@ const StyledTextArea = styled.textarea({
     resize: 'none',
 });
 
+const StyledErrorText = styled.label({
+    color: '#ff3632',
+    fontFamily: 'KingthingsPetrock',
+    fontSize: '16px',
+});
+
 const LabeledInput = ({
     label,
     value,
@@ -93,6 +99,11 @@ const LabeledInput = ({
                     type={type}
                     min={min}
                     max={max}/>
+            )}
+            {error && (
+                <StyledErrorText>
+                    {error}
+                </StyledErrorText>
             )}
         </StyledInputWrapper>
     )

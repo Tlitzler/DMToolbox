@@ -4,16 +4,17 @@ import mapTest from '../../Theme/Images/mapTest.jpg';
 import PageWrapper from '../../Molecules/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import Button from '../../Atoms/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { emptyCampaign } from '../../Redux/CampaignSlice/CampaignReducer/campaignsReducer';
 import LabeledInput from '../../Atoms/LabeledInput';
 import { ICampaignObject } from '../../Redux/Types/campaign';
 import { selectUserId } from '../../Redux/UserSlice/userSelectors';
+import ImageInput from '../../Atoms/ImageInput';
+import { addCampaignThunk } from '../../Redux/CampaignSlice/thunks/addCampaignThunk';
 
 const StyledContainer = styled.div({
   width: '100%',
   height: '100%',
-  position: 'relative',
   zIndex: 0,
   display: 'flex',
   justifyContent: 'center',
@@ -35,12 +36,16 @@ const StyledButtonContainer = styled.div({
 });
 
 const CampaignCreatorPage = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const userId = useAppSelector(selectUserId);
-    const [campaign, setCampaign] = useState({...emptyCampaign, userId: userId});
+    const [campaign, setCampaign] = useState({...emptyCampaign});
+    const [image, setImage] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const [errors, setErrors] = useState({
         name: '',
-        description: '',
+        loading: '',
     });
 
     const handleChange = (key: keyof ICampaignObject, value: string) => {
@@ -52,17 +57,27 @@ const CampaignCreatorPage = () => {
 
     const validateCampaign = () => {
         let hasError = false;
-        if(campaign.name === ''){
+        if(campaign.name === '') {
             hasError = true;
             errors.name = 'Campaign must have a name';
+        }
+        if (loading) {
+            hasError = true;
+            errors.loading = 'Image is still uploading';
         }
         setErrors(errors);
         return hasError;
     }
 
     const handleSubmit = () => {
-        if (validateCampaign()) return;
-        console.log('CUSTOM LOG submitting campaign', campaign);
+        if (validateCampaign() || userId === undefined) return;
+        const campaignObject: ICampaignObject = {
+            ...campaign,
+            userId: userId,
+            imageURL: image,
+        }
+        dispatch(addCampaignThunk(campaignObject));
+        navigate('/campaign');
     }
 
     return (
@@ -75,6 +90,7 @@ const CampaignCreatorPage = () => {
                     height="60px"
                     width="200px"
                     label="Campaign Title"
+                    error={errors.name}
                     value={campaign.name}
                     onChange={(event) => handleChange('name', event.target.value)}
                     submitForm={handleSubmit}
@@ -88,15 +104,24 @@ const CampaignCreatorPage = () => {
                     onChange={(event) => handleChange('description', event.target.value)}
                     submitForm={handleSubmit}
                     />
+                <ImageInput
+                    height="175px"
+                    width="350px"
+                    label="Upload Campaign Thumbnail"
+                    value={image}
+                    setLoading={setLoading}
+                    onChange={(url) => setImage(url)}
+                    submitForm={handleSubmit}
+                    error={errors.loading}/>
                 <StyledButtonContainer>
                     <Link to="/campaigns">
                         <Button>
                             Cancel
                         </Button>
                     </Link>
-                    <Button onClick={handleSubmit}>
+                    <Button onClick={handleSubmit} disabled={loading}>
                         Submit
-                    </Button>
+                    </Button>        
                 </StyledButtonContainer>
             </StyledContainer>
         </PageWrapper>

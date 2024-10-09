@@ -3,6 +3,8 @@
     "version": "0.1.4",
     "private": true,
     "dependencies": {
+        "@cloudinary/react": "^1.13.0",
+        "@cloudinary/url-gen": "^1.21.0",
         "@emotion/react": "^11.13.0",
         "@emotion/styled": "^10.0.27",
         "@reduxjs/toolkit": "^1.9.6",
@@ -34,7 +36,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-        "eslintConfig": {
+    "eslintConfig": {
         "extends": [
             "react-app",
             "react-app/jest"

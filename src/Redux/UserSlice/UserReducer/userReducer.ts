@@ -33,7 +33,6 @@ export const userReducer = createReducer(
             state.authenticated = true;
         });
         builder.addCase(logout, (state) => {
-            console.log('CUSTOM LOG logging out');
             state.authenticated = false;
             state.userObject = {...emptyUser};
         });

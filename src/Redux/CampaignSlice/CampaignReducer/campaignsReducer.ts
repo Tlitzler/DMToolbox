@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { ICampaignObject } from '../../Types/campaign';
+import { addCampaignThunk } from '../thunks/addCampaignThunk';
 
 interface ICampaignSlice {
     campaignList: ICampaignObject[];
@@ -34,6 +35,10 @@ const initialState: ICampaignSlice = {
 export const campaignsReducer = createReducer(
     initialState,
     (builder) => {
+        builder.addCase(addCampaignThunk.fulfilled, (state, action) => {
+            state.campaignList.push(action.payload);
+            state.selectedCampaign = action.payload;
+        });
         //add thunks here
     }
 );

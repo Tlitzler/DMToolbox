@@ -11,6 +11,7 @@ export interface IButtonProps {
     margin?: string;
     imageSource?: string;
     hoverSource?: string;
+    disabled?: boolean;
 };
 
 interface IGeneralStyles {
@@ -100,6 +101,7 @@ const Button = ({
     margin,
     imageSource,
     hoverSource,
+    disabled,
 }: IButtonProps) => {
     const theme = useTheme();
 
@@ -122,16 +124,16 @@ const Button = ({
 
     switch(type) {
         case 'secondary':
-            return <SecondaryButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</SecondaryButton>;
+            return <SecondaryButton disabled={disabled} onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</SecondaryButton>;
         case 'icon':
-            return <IconButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</IconButton>;
+            return <IconButton disabled={disabled} onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</IconButton>;
         case 'text':
-            return <TextButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</TextButton>;
+            return <TextButton disabled={disabled} onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</TextButton>;
         case 'image':
-            return <ImageButton onClick={handleClick} generalStyles={generalStyles} theme={theme} imageSource={imageSource} hoverSource={hoverSource}>{children}</ImageButton>;
+            return <ImageButton disabled={disabled} onClick={handleClick} generalStyles={generalStyles} theme={theme} imageSource={imageSource} hoverSource={hoverSource}>{children}</ImageButton>;
         case 'primary':
         default:
-            return <PrimaryButton onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</PrimaryButton>;
+            return <PrimaryButton disabled={disabled} onClick={handleClick} generalStyles={generalStyles} theme={theme}>{children}</PrimaryButton>;
     }
 };
 

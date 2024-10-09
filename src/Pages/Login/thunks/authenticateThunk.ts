@@ -6,6 +6,6 @@ export const authenticateThunk = createAsyncThunk(
   'user/authenticate',
   async (params: {email: string; password: string;}) => {
     const response = await authenticateAPI(params) as AxiosResponse;
-    return response.data;
+    return response.data[0];
   }
 );
