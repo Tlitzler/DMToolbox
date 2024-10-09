@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import { CampaignPreview } from './CampaignPreview';
 import { useAppSelector } from '../Redux/hooks';
 import { selectCampaignList } from '../Redux/CampaignSlice/campaignSelectors';
-import { dir } from 'console';
 import { ICampaignObject } from '../Redux/Types/campaign';
 
 export interface ICampaignListProps {
@@ -30,7 +29,10 @@ const StyledCampaignsHeaderButtonWrapper = styled.div({
 });
 
 const StyledCampaignListWrapper = styled.div({
+    display: 'flex',
+    gap: '50px',
     flexWrap: 'wrap',
+    maxHeight: '60vh',
     overflow: 'auto',
 });
 
@@ -70,7 +72,11 @@ export const CampaignList: React.FC<ICampaignListProps> = () => {
                 ) : (
                     <StyledCampaignListWrapper>
                         {campaignList.map((campaign) => (
-                            <CampaignPreview key={campaign.id} campaign={campaign}/>
+                            <CampaignPreview 
+                                key={campaign.id} 
+                                name={campaign.name}
+                                thumbnailURL={campaign.imageURL}
+                                id={campaign.id}/>
                         ))}
                     </StyledCampaignListWrapper>
                 )

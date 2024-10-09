@@ -10,6 +10,8 @@ import diceRow from '../../Theme/Images/diceRow.png';
 import diceRowHover from '../../Theme/Images/diceRowHover.png';
 import diceRowActive from '../../Theme/Images/diceRowActive.png';
 import diceRowActiveHover from '../../Theme/Images/diceRowActiveHover.png';
+import { useAppSelector } from '../../Redux/hooks';
+import { selectSelectedCampaign } from '../../Redux/CampaignSlice/campaignSelectors';
 
 const StyledContainer = styled.div({
   width: '100%',
@@ -24,30 +26,31 @@ const StyledContainer = styled.div({
 });
 
 const CampaignPage = () => {
-  const [displayDiceRoller, setDisplayDiceRoller] = useState(false);
-  const toolbarOptions: IToolbarOption[] = [
-    {
-      text: 'Dice Roller',
-      id: 'dice',
-      component: (
-        <Draggable key={'dice'} onClose={() => setDisplayDiceRoller(false)} defaultPosition={{x: 300, y: 0, width: 320, height: 200}}>
-          <DiceRoller/>
-        </Draggable>
-      ),
-      onClick: () => setDisplayDiceRoller(!displayDiceRoller),
-      visible: displayDiceRoller,
-      imageSource: displayDiceRoller ? diceRowActive : diceRow,
-      hoverSource: displayDiceRoller ? diceRowActiveHover : diceRowHover,
-    },
-  ]; 
+    const campaign = useAppSelector(selectSelectedCampaign);
+    const [displayDiceRoller, setDisplayDiceRoller] = useState(false);
+    const toolbarOptions: IToolbarOption[] = [
+        {
+            text: 'Dice Roller',
+            id: 'dice',
+            component: (
+                <Draggable key={'dice'} onClose={() => setDisplayDiceRoller(false)} defaultPosition={{x: 300, y: 0, width: 320, height: 200}}>
+                    <DiceRoller/>
+                </Draggable>
+            ),
+            onClick: () => setDisplayDiceRoller(!displayDiceRoller),
+            visible: displayDiceRoller,
+            imageSource: displayDiceRoller ? diceRowActive : diceRow,
+            hoverSource: displayDiceRoller ? diceRowActiveHover : diceRowHover,
+        },
+    ]; 
 
-  return (
-    <PageWrapper leftElement={<Toolbar options={toolbarOptions} location="left"/>}>
-      <StyledContainer>
-        <MapComponent imageSource={mapTest} />
-      </StyledContainer>
-    </PageWrapper>
-  )
+    return (
+        <PageWrapper leftElement={<Toolbar options={toolbarOptions} location="left"/>}>
+            <StyledContainer>
+                <MapComponent imageSource={mapTest} />
+            </StyledContainer>
+        </PageWrapper>
+    )
 };
 
 export default CampaignPage;

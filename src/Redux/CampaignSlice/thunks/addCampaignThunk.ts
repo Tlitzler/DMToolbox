@@ -6,7 +6,6 @@ export const addCampaignThunk = createAsyncThunk(
     "campaign/addCampaign",
     async (campaign: ICampaignObject) => {
         const newCampaign = await addCampaign(campaign) as ICampaignObject;
-        console.log('CUSTOM LOG newCampaign', newCampaign);
         return newCampaign;
     }
 );

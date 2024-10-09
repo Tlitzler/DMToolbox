@@ -1,6 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { ICampaignObject } from '../../Types/campaign';
 import { addCampaignThunk } from '../thunks/addCampaignThunk';
+import { fetchCampaignsThunk } from '../thunks/fetchCampaignsThunk';
+import { setSelectedCampaign } from '../actions/setSelectedCampaign';
 
 interface ICampaignSlice {
     campaignList: ICampaignObject[];
@@ -39,6 +41,11 @@ export const campaignsReducer = createReducer(
             state.campaignList.push(action.payload);
             state.selectedCampaign = action.payload;
         });
-        //add thunks here
+        builder.addCase(fetchCampaignsThunk.fulfilled, (state, action) => {
+            state.campaignList = action.payload;
+        });
+        builder.addCase(setSelectedCampaign, (state, action) => {
+            state.selectedCampaign = state.campaignList.find(campaign => campaign.id === action.payload) || {...emptyCampaign};
+        });
     }
 );
