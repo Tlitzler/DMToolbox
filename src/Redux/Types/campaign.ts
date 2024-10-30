@@ -142,7 +142,7 @@ export interface IItemObject {
     imageURL?: string;
     function: string;
     value: number;
-}
+};
 
 export interface IFolderObject {
     name: string;
@@ -153,12 +153,20 @@ export interface IFolderObject {
     }[];
 };
 
+export interface INoteObject {
+    name: string;
+    id: number;
+    description: string;
+    date: string;
+};
+
 export interface ICampaignObject {
     userId: number;
     name: string;
     id: number;
     imageURL?: string; // preview image, not map image
     description: string;
+    defaultMapId: number | null;
     characters: ICharacterObject[];
     enemies: IEnemyObject[];
     hazards: IHazardObject[];
@@ -171,5 +179,5 @@ export interface ICampaignObject {
     parties: IPartyObject[];
     items: IItemObject[];
     folders: IFolderObject[];
-    date: string;
+    date: string | null;
 };

@@ -109,7 +109,7 @@ const Button = ({
         padding: type === 'text' ? '0' : '10px',
         borderRadius: '5px',
         border: 'none',
-        cursor: 'pointer',
+        cursor: disabled ? 'not-allowed' : 'pointer',
         width: width ? width : 'auto',
         height: height ? height : 'auto',
         margin: margin ? margin : '0',

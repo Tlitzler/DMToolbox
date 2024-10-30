@@ -12,6 +12,7 @@ export interface IDraggableProps {
         width: number;
         height: number;
     };
+    onResize?: (width: number, height: number) => void;
 };
 
 const StyledDraggableHandle = styled.strong({
@@ -70,9 +71,10 @@ const Draggable = ({
         width: 200,
         height: 200,
     },
+    onResize,
 }: IDraggableProps) => {
     return (
-        <StyledRnd default={defaultPosition} dragHandleClassName="handle">
+        <StyledRnd default={defaultPosition} dragHandleClassName="handle" onResize={(_: any, __: any, refToElement: any, ___: any) => onResize && onResize(refToElement.offsetWidth, refToElement.offsetHeight)}>
             <StyledDraggableHandle className="handle">
                 <StyledCloseButton onClick={onClose}>
                     X

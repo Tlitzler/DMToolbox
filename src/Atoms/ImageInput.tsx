@@ -14,6 +14,7 @@ export interface IImageInputProps {
     submitForm?: () => void;
     error?: string;
     setLoading?: (loading: boolean) => void;
+    hidePreview?: boolean;
 };
 
 interface IWrapperProps {
@@ -26,6 +27,7 @@ const StyledInputWrapper = styled.div(({width, height}: IWrapperProps) => ({
     height: height,
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'center',
 }));
 
 const StyledUploadWrapper = styled.div({
@@ -81,6 +83,7 @@ const ImageInput = ({
     submitForm,
     error,
     setLoading,
+    hidePreview,
 }: IImageInputProps) => {
     const theme = useTheme();
 
@@ -110,11 +113,14 @@ const ImageInput = ({
                         onChange={handleImageUpload}
                         type="file"/>
                 </StyledUploadWrapper>
-            {value.length > 0 ? (
-                <StyledPreview src={String(value)} alt="preview"/>
-            ) : (
-                <StyledPreview src={noPreview} alt="no preview"/>
+            {!hidePreview && (
+                value.length > 0 ? (
+                    <StyledPreview src={String(value)} alt="preview"/>
+                ) : (
+                    <StyledPreview src={noPreview} alt="no preview"/>
+                )
             )}
+            
             {error && (
                 <StyledErrorText>
                     {error}

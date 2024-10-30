@@ -6,14 +6,17 @@ import { TransformWrapper, TransformComponent, MiniMap } from 'react-zoom-pan-pi
 export interface IMapComponentProps {
     imageSource?: string;
     children?: React.ReactNode;
+    mapWidth?: string;
+    mapHeight?: string;
 };
 
 const StyledMapWrapper = styled.div({
     display: 'flex',
     justifyContent: 'center',
     border: '1px solid black',
-    width: 'fit-content',
     margin: 'auto',
+    width: '100%',
+    height: '100%',
 });
 
 interface IStyledMapImageProps {
@@ -32,17 +35,19 @@ const StyledMapImage = styled.div(({ imageSource, width, height }: IStyledMapIma
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-  }));
+}));
 
 const MapComponent = ({
     imageSource,
     children,
+    mapWidth,
+    mapHeight,
 }: IMapComponentProps) => {
     return (
         <StyledMapWrapper>
             <TransformWrapper>
                 <TransformComponent>
-                    <StyledMapImage imageSource={imageSource}>
+                    <StyledMapImage imageSource={imageSource} width={mapWidth} height={mapHeight}>
                         {children}
                     </StyledMapImage>
                 </TransformComponent>
