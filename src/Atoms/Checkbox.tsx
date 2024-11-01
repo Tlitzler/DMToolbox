@@ -6,6 +6,7 @@ export interface ICheckboxProps {
     label?: string;
     value: boolean;
     onChange: (value: boolean) => void;
+    disabled?: boolean;
 };
 
 const StyledCheckboxWrapper = styled.div({
@@ -21,16 +22,21 @@ const StyledCheckboxLabel = styled.label({
     fontSize: '16px',
 });
 
-const StyledCheckbox = styled.input({
+interface IStyledCheckboxProps {
+    disabled?: boolean;
+};
+
+const StyledCheckbox = styled.input(({disabled}: IStyledCheckboxProps) => ({
     height: '20px',
     width: '20px',
-    cursor: 'pointer',
-});
+    cursor: disabled ? 'default' : 'pointer',
+    opacity: disabled ? 0.5 : 1,
+}));
 
-const Checkbox = ({ label, value, onChange }: ICheckboxProps) => {
+const Checkbox = ({ label, value, onChange, disabled }: ICheckboxProps) => {
     return (
         <StyledCheckboxWrapper>
-            <StyledCheckbox type="checkbox" checked={value} onChange={() => onChange(!value)}/>
+            <StyledCheckbox type="checkbox" checked={value} onChange={() => onChange(!value)} disabled={disabled}/>
             <StyledCheckboxLabel>{label}</StyledCheckboxLabel>
         </StyledCheckboxWrapper>
     );

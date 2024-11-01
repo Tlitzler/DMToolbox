@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import ParchmentTexture from '../Theme/Images/ParchmentTexture.png';
 
@@ -13,6 +13,7 @@ export interface ILabeledInputProps {
     max?: number;
     submitForm?: () => void;
     error?: string;
+    disabled?: boolean;
 };
 
 interface IWrapperProps {
@@ -33,16 +34,22 @@ const StyledInputLabel = styled.label({
     fontSize: '16px',
 });
 
-const StyledInput = styled.input({
+interface IStyledInputProps {
+    disabled?: boolean;
+};
+
+const StyledInput = styled.input(({disabled}: IStyledInputProps) => ({
     backgroundColor: '#fffef0',
     backgroundImage: `url(${ParchmentTexture})`,
     height: '100%',
+    opacity: disabled ? 0.5 : 1,
+    cursor: disabled ? 'default' : 'text',
     ":focus": {
     outline: '2px solid #C4A484',
     },
     fontFamily: 'KingthingsPetrock',
     fontSize: '16px',
-});
+}));
 
 const StyledTextArea = styled.textarea({
     backgroundColor: '#fffef0',
@@ -73,7 +80,14 @@ const LabeledInput = ({
     max,
     submitForm,
     error,
+    disabled,
 }: ILabeledInputProps) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        console.log('CUSTOM LOG testing disabled', disabled);
+        if (disabled) return;
+        onChange(event);
+    }
+
     return (
         <StyledInputWrapper 
             height={height}
@@ -91,11 +105,12 @@ const LabeledInput = ({
             {type === 'longtext' ? (
                 <StyledTextArea 
                     value={value}
-                    onChange={onChange}/>
+                    onChange={handleChange}/>
             ) : (
                 <StyledInput 
+                    disabled={disabled}
                     value={value}
-                    onChange={onChange}
+                    onChange={handleChange}
                     type={type}
                     min={min}
                     max={max}/>

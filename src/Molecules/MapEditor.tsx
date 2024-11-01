@@ -30,6 +30,7 @@ const StyledMapEditorWrapper = styled.div({
 const StyledMapContentWrapper = styled.div({
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     gap: '20px',
     height: '100%',
 });
@@ -85,6 +86,8 @@ const MapEditor = ({
     const [mapDescription, setMapDescription] = useState(map?.description || '');
     const [hexGrid, setHexGrid] = useState(!!(map?.scale && map?.hexes));
     const [squareGrid, setSquareGrid] = useState(!!(map?.scale && !map?.hexes));
+    const [gridRows, setGridRows] = useState(5);
+    const [gridColumns, setGridColumns] = useState(5);
     const [errors, setErrors] = useState({name: '', imageURL: ''});
 
     const handleResize = (width: number, height: number) => {
@@ -114,6 +117,16 @@ const MapEditor = ({
         }
         setErrors(errors);
         return valid;
+    }
+
+    const handleGridTypeSelect = (type: 'hex' | 'square', value: boolean) => {
+        if (type === 'hex') {
+            setHexGrid(value);
+            setSquareGrid(false);
+        } else {
+            setSquareGrid(value);
+            setHexGrid(false);
+        }
     }
 
     const handleSubmit = () => {
@@ -147,6 +160,23 @@ const MapEditor = ({
                 <StyledMapEditorTitle>
                     Map Creator
                 </StyledMapEditorTitle>
+
+                <StyledMapPreviewWrapper width={mapWidth} height={mapHeight}>
+                    {mapImage ? (
+                        <MapComponent 
+                            imageSource={mapImage} 
+                            mapWidth={mapWidth} 
+                            mapHeight={mapHeight}
+                            hasGrid={hexGrid || squareGrid}
+                            gridColumns={gridColumns}
+                            gridRows={gridRows}/>
+                    ) : (
+                        <StyledNoMapPreview width={mapWidth} height={mapHeight}>
+                            Upload image to see map preview
+                        </StyledNoMapPreview>
+                    )}
+                </StyledMapPreviewWrapper>
+
                 <StyledMapContentWrapper>
                     <StyledContentColumn style={{gap: '20px'}}>
                         <LabeledInput
@@ -163,18 +193,9 @@ const MapEditor = ({
                             value={mapDescription}
                             onChange={(event) => setMapDescription(event.target.value)}
                             width="200px"
-                            height="100px"/>
+                            height="50px"/>
                     </StyledContentColumn>
                     <StyledContentColumn>
-                        <StyledMapPreviewWrapper width={mapWidth} height={mapHeight}>
-                            {mapImage ? (
-                                <MapComponent imageSource={mapImage} mapWidth={mapWidth} mapHeight={mapHeight}/>
-                            ) : (
-                                <StyledNoMapPreview width={mapWidth} height={mapHeight}>
-                                    Upload image to see map preview
-                                </StyledNoMapPreview>
-                            )}
-                        </StyledMapPreviewWrapper>
                         <ImageInput 
                             label="Upload Map Image"
                             value={mapImage}
@@ -186,14 +207,45 @@ const MapEditor = ({
                     </StyledContentColumn>
                     <StyledContentColumn style={{alignItems: 'flex-start'}}>
                         Grid Settings
-                        <Checkbox 
-                            label="Hex Grid"
-                            value={hexGrid}
-                            onChange={(val: boolean) => setHexGrid(val)}/>
-                        <Checkbox
-                            label="Square Grid"
-                            value={squareGrid}
-                            onChange={(val: boolean) => setSquareGrid(val)}/>
+                        <div style={{display: 'flex', flexDirection: 'row', gap: '5px'}}>
+                            <Checkbox 
+                                label="Hex Grid"
+                                value={hexGrid}
+                                onChange={(val: boolean) => handleGridTypeSelect('hex', val)}
+                                disabled={mapImage === ''}/>
+                            <Checkbox
+                                label="Square Grid"
+                                value={squareGrid}
+                                onChange={(val: boolean) => handleGridTypeSelect('square', val)}
+                                disabled={mapImage === ''}/>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'row', gap: '5px'}}>
+                            <LabeledInput
+                                disabled={!hexGrid && !squareGrid}
+                                width="40px"
+                                height="25px"
+                                value={gridRows}
+                                min={5}
+                                type="number"
+                                onChange={(event) => setGridRows(Number(event.target.value))}/>
+                            <span>
+                                Rows
+                            </span>
+                        </div>
+
+                        <div style={{display: 'flex', flexDirection: 'row', gap: '5px'}}>
+                            <LabeledInput
+                                disabled={!hexGrid && !squareGrid}
+                                width="40px"
+                                height="25px"
+                                value={gridColumns}
+                                min={5}
+                                type="number"
+                                onChange={(event) => setGridColumns(Number(event.target.value))}/>
+                            <span>
+                                Columns
+                            </span>
+                        </div>
                     </StyledContentColumn>
                 </StyledMapContentWrapper>
                 <Button onClick={handleSubmit} disabled={hasError}>
