@@ -138,7 +138,7 @@ export interface IPartyObject {
 export interface IItemObject {
     name: string;
     id: number;
-    descrlption?: string;
+    description?: string;
     imageURL?: string;
     function: string;
     value: number;

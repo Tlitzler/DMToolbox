@@ -3,7 +3,7 @@ import Button from '../Atoms/Button';
 import styled from '@emotion/styled';
 
 export interface IToolbarOption {
-    text: string;
+    text?: string;
     id: string;
     component: React.ReactNode;
     onClick: () => void;
@@ -57,7 +57,9 @@ const Toolbar = ({ options, location }: IToolbarProps) => {
                         onClick={option.onClick} 
                         type={option.imageSource ? 'image' : 'primary'} 
                         imageSource={option.imageSource}
-                        hoverSource={option.hoverSource}/>
+                        hoverSource={option.hoverSource}>
+                        {option.text}
+                    </Button>
                 ))}
             </StyledToolbar>
                 <div style={{height: 0}}>

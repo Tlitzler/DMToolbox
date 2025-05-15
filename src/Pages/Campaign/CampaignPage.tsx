@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import PageWrapper from '../../Molecules/PageWrapper';
 import MapComponent from '../../Atoms/MapComponent';
@@ -10,11 +10,12 @@ import diceRowHover from '../../Theme/Images/diceRowHover.png';
 import diceRowActive from '../../Theme/Images/diceRowActive.png';
 import diceRowActiveHover from '../../Theme/Images/diceRowActiveHover.png';
 import { useAppSelector } from '../../Redux/hooks';
-import { selectSelectedCampaign } from '../../Redux/CampaignSlice/campaignSelectors';
+import { selectSelectedCampaign, selectSelectedMap } from '../../Redux/CampaignSlice/campaignSelectors';
 import Button from '../../Atoms/Button';
 import MapEditor from '../../Molecules/MapEditor';
-import mapTest from '../../Theme/Images/mapTest.jpg';
 import { IMapObject } from '../../Redux/Types/campaign';
+import Tabs, { ITabOption } from '../../Molecules/Tabs';
+import MapSelector from '../../Molecules/MapSelector';
 
 const StyledContainer = styled.div({
   width: '100%',
@@ -40,13 +41,13 @@ const StyledNoMapWrapper = styled.div({
 
 const CampaignPage = () => {
     const campaign = useAppSelector(selectSelectedCampaign);
+    const selectedMap = useAppSelector(selectSelectedMap);
     const [displayDiceRoller, setDisplayDiceRoller] = useState(false);
     const [displayMapEditor, setDisplayMapEditor] = useState(false);
     const [editingMap, setEditingMap] = useState<IMapObject | undefined>();
     
     const toolbarOptions: IToolbarOption[] = [
         {
-            text: 'Dice Roller',
             id: 'dice',
             component: (
                 <Draggable key="dice" onClose={() => setDisplayDiceRoller(false)} defaultPosition={{x: 300, y: 0, width: 320, height: 200}}>
@@ -72,12 +73,31 @@ const CampaignPage = () => {
             visible: displayMapEditor,
         }
     ]; 
-    const defaultMap = campaign.maps.find(map => map.id === campaign.defaultMapId);
+
+    const tabOptions: ITabOption[] = [
+        {
+            id: 'campaign',
+            label: 'Campaign',
+            content: <div>Campaign Content</div>,
+        },
+        {
+            id: 'maps',
+            label: 'Maps',
+            content: <MapSelector/>,
+        },
+    ];
+
     return (
-        <PageWrapper leftElement={<Toolbar options={toolbarOptions} location="left"/>}>
+        <PageWrapper 
+            leftElement={<Toolbar options={toolbarOptions} location="left"/>}
+            rightElement={<Tabs options={tabOptions}/>}>
             <StyledContainer>
-                {defaultMap ? (
-                    <MapComponent imageSource={defaultMap.imageURL} />
+                {selectedMap ? (
+                    <MapComponent 
+                        imageSource={selectedMap.imageURL}
+                        hasGrid={!!selectedMap.width || !!selectedMap.height} 
+                        gridColumns={selectedMap.width}
+                        gridRows={selectedMap.height}/>
                 ) : (
                     <StyledNoMapWrapper>
                         <span>

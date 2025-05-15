@@ -50,20 +50,22 @@ const MapComponent = ({
     gridRows,
     gridColumns,
 }: IMapComponentProps) => {
+    console.log('CUSTOM LOG testing stuff', hasGrid, gridRows, gridColumns, mapWidth, mapHeight);
     return (
         <StyledMapWrapper>
             <TransformWrapper>
                 <TransformComponent>
-                    {hasGrid && gridRows && gridColumns && (
-                        <Grid
-                            width={mapWidth || '65vw'}
-                            height={mapHeight || '90vh'}
-                            rows={gridRows}
-                            columns={gridColumns}/>
-                    )}
-                    <StyledMapImage imageSource={imageSource} width={mapWidth} height={mapHeight}>
-                        {children}
-                    </StyledMapImage>
+                    <Grid
+                        width={mapWidth || '65vw'}
+                        height={mapHeight || '90vh'}
+                        rows={gridRows ?? 0}
+                        columns={gridColumns ?? 0}
+                        isVisible={!!(hasGrid && gridRows && gridColumns)}
+                        imageSource={imageSource}>
+                        <StyledMapImage imageSource={imageSource} width={mapWidth} height={mapHeight}>
+                            {children}
+                        </StyledMapImage>
+                    </Grid>
                 </TransformComponent>
             </TransformWrapper>
         </StyledMapWrapper>

@@ -22,15 +22,15 @@ const StyledRightWrapper = styled.div({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '90vh',
-    width: '15vw',
+    height: '100vh',
+    width: '14vw',
 });
 
 const StyledPageWrapper = styled.div({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: '90vh',
+    height: '100vh',
     width: '100%',
 });
 

@@ -139,8 +139,8 @@ const MapEditor = ({
             locationId: map?.locationId || -1,
             locationIds: map?.locationIds || [],
             hexes: hexGrid,
-            width: 0, // will update later, placeholder to make BE happy
-            height: 0,
+            width: gridColumns,
+            height: gridRows,
             scale: map?.scale || 0,
         };
         dispatch(addMapThunk(mapObject));
