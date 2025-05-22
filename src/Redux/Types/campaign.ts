@@ -140,7 +140,6 @@ export interface IItemObject {
     id: number;
     description?: string;
     imageURL?: string;
-    function: string;
     value: number;
 };
 

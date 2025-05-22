@@ -4,7 +4,12 @@ import { addCampaignThunk } from '../thunks/addCampaignThunk';
 import { fetchCampaignsThunk } from '../thunks/fetchCampaignsThunk';
 import { setSelectedCampaign, setSelectedMap } from '../actions/setSelectedCampaign';
 import { addMapThunk } from '../thunks/addMapThunk';
+import { updateMapThunk } from '../thunks/updateMapThunk';
+import { deleteMapThunk } from '../thunks/deleteMapThunk';
 import { setDefaultMapThunk } from '../thunks/setDefaultMapThunk';
+import { addItemThunk } from '../thunks/addItemThunk';
+import { updateItemThunk } from '../thunks/updateItemThunk';
+import { deleteItemThunk } from '../thunks/deleteItemThunk';
 
 interface ICampaignSlice {
     campaignList: ICampaignObject[];
@@ -68,6 +73,36 @@ export const campaignsReducer = createReducer(
             if (selectedMap) {
                 state.selectedMap = selectedMap;
             }
+        });
+        builder.addCase(updateMapThunk.fulfilled, (state, action) => {
+            const updatedMap = action.payload;
+            console.log('Updated map:', updatedMap);
+            const index = state.selectedCampaign.maps.findIndex(map => map.id === updatedMap.id);
+            if (index !== -1) {
+                state.selectedCampaign.maps[index] = updatedMap;
+            }
+        });
+        builder.addCase(deleteMapThunk.fulfilled, (state, action) => {
+            const mapId = action.payload.id;
+            state.selectedCampaign.maps = state.selectedCampaign.maps.filter(map => map.id !== mapId);
+            if (state.selectedMap?.id === mapId) {
+                state.selectedMap = undefined;
+            }
+        });
+        builder.addCase(addItemThunk.fulfilled, (state, action) => {
+            const newItem = action.payload;
+            state.selectedCampaign.items.push(newItem);
+        });
+        builder.addCase(updateItemThunk.fulfilled, (state, action) => {
+            const updatedItem = action.payload;
+            const index = state.selectedCampaign.items.findIndex(item => item.id === updatedItem.id);
+            if (index !== -1) {
+                state.selectedCampaign.items[index] = updatedItem;
+            }
+        });
+        builder.addCase(deleteItemThunk.fulfilled, (state, action) => {
+            const itemId = action.payload.id;
+            state.selectedCampaign.items = state.selectedCampaign.items.filter(item => item.id !== itemId);
         });
     }
 );

@@ -10,6 +10,7 @@ import Checkbox from '../Atoms/Checkbox';
 import { IMapObject } from '../Redux/Types/campaign';
 import { useAppDispatch } from '../Redux/hooks';
 import { addMapThunk } from '../Redux/CampaignSlice/thunks/addMapThunk';
+import { updateMapThunk } from '../Redux/CampaignSlice/thunks/updateMapThunk';
 
 export interface IMapEditorProps {
     map?: IMapObject;
@@ -24,7 +25,7 @@ const StyledMapEditorWrapper = styled.div({
     justifyContent: 'center',
     alignItems: 'center',
     gap: '10px',
-    height: '100%',
+    height: 'calc(100% - 50px)',
 });
 
 const StyledMapContentWrapper = styled.div({
@@ -84,10 +85,10 @@ const MapEditor = ({
     const [modalHeight, setModalHeight] = useState(defaultHeight || 450);
     const [mapName, setMapName] = useState(map?.name || '');
     const [mapDescription, setMapDescription] = useState(map?.description || '');
-    const [hexGrid, setHexGrid] = useState(!!(map?.scale && map?.hexes));
-    const [squareGrid, setSquareGrid] = useState(!!(map?.scale && !map?.hexes));
-    const [gridRows, setGridRows] = useState(5);
-    const [gridColumns, setGridColumns] = useState(5);
+    const [hexGrid, setHexGrid] = useState(!!(map?.height && map?.hexes));
+    const [squareGrid, setSquareGrid] = useState(!!(map?.height && !map?.hexes));
+    const [gridRows, setGridRows] = useState(map?.height || 5);
+    const [gridColumns, setGridColumns] = useState(map?.width || 5);
     const [errors, setErrors] = useState({name: '', imageURL: ''});
 
     const handleResize = (width: number, height: number) => {
@@ -143,14 +144,14 @@ const MapEditor = ({
             height: gridRows,
             scale: map?.scale || 0,
         };
-        dispatch(addMapThunk(mapObject));
+        dispatch(mapObject.id !== -1 ? updateMapThunk(mapObject) : addMapThunk(mapObject));
         onClose();
     }
 
     const [mapWidth, mapHeight] = [`${modalWidth / 3}px`, `${modalHeight  / 3}px`];
     return (
         <Draggable key={'map'} onClose={onClose} defaultPosition={{
-                x: 0.5 * modalWidth, 
+                x: 1.5 * modalWidth, 
                 y: -0.5 * modalHeight, 
                 width: modalWidth, 
                 height: modalHeight

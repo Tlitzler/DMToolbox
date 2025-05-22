@@ -50,7 +50,6 @@ const MapComponent = ({
     gridRows,
     gridColumns,
 }: IMapComponentProps) => {
-    console.log('CUSTOM LOG testing stuff', hasGrid, gridRows, gridColumns, mapWidth, mapHeight);
     return (
         <StyledMapWrapper>
             <TransformWrapper>

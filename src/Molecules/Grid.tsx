@@ -69,8 +69,6 @@ const Grid = ({
     }
     // const cellSize = Math.min(pixelWidth, pixelHeight) / Math.min(rows, columns);
 
-    console.log('CUSTOM LOG testing pixels', pixelWidth, pixelHeight, cellSize, isVisible);
-
     return isVisible ? (
         <GridWrapper
             rows={rows}

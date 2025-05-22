@@ -13,9 +13,11 @@ import { useAppSelector } from '../../Redux/hooks';
 import { selectSelectedCampaign, selectSelectedMap } from '../../Redux/CampaignSlice/campaignSelectors';
 import Button from '../../Atoms/Button';
 import MapEditor from '../../Molecules/MapEditor';
-import { IMapObject } from '../../Redux/Types/campaign';
+import ItemEditor from '../../Molecules/ItemEditor';
+import { IMapObject, IItemObject } from '../../Redux/Types/campaign';
 import Tabs, { ITabOption } from '../../Molecules/Tabs';
 import MapSelector from '../../Molecules/MapSelector';
+import ItemSelector from '../../Molecules/ItemSelector';
 
 const StyledContainer = styled.div({
   width: '100%',
@@ -44,7 +46,9 @@ const CampaignPage = () => {
     const selectedMap = useAppSelector(selectSelectedMap);
     const [displayDiceRoller, setDisplayDiceRoller] = useState(false);
     const [displayMapEditor, setDisplayMapEditor] = useState(false);
+    const [displayItemEditor, setDisplayItemEditor] = useState(false);
     const [editingMap, setEditingMap] = useState<IMapObject | undefined>();
+    const [editingItem, setEditingItem] = useState<IItemObject | undefined>();
     
     const toolbarOptions: IToolbarOption[] = [
         {
@@ -66,13 +70,47 @@ const CampaignPage = () => {
                 <MapEditor 
                     key="map"
                     map={editingMap}
-                    onClose={() => setDisplayMapEditor(false)}
+                    onClose={() => {
+                        setDisplayMapEditor(false)
+                        setEditingMap(undefined);
+                    }}
                     />
             ),
             onClick: () => setDisplayMapEditor(!displayMapEditor),
             visible: displayMapEditor,
+        },
+        {
+            text: 'Item Editor',
+            id: 'item',
+            component: (
+                <ItemEditor 
+                    key="item"
+                    item={editingItem}
+                    onClose={() => {
+                        setDisplayItemEditor(false)
+                        setEditingItem(undefined);
+                    }}
+                    defaultWidth={450}
+                    defaultHeight={625}/>
+            ),
+            onClick: () => setDisplayItemEditor(!displayItemEditor),
+            visible: displayItemEditor,
         }
     ]; 
+
+    const handleEditMap = (mapId: number) => {
+        setEditingMap(campaign.maps.find(map => map.id === mapId));
+        setDisplayMapEditor(true);
+    }
+
+    const handleEditItem = (itemId: number) => {
+        setEditingItem(campaign.items.find(item => item.id === itemId));
+        setDisplayItemEditor(true);
+    }
+
+    const handleSelectItem = (itemId: number) => {
+        // Repurpose item editor to just display an item maybe?
+    }
 
     const tabOptions: ITabOption[] = [
         {
@@ -83,7 +121,14 @@ const CampaignPage = () => {
         {
             id: 'maps',
             label: 'Maps',
-            content: <MapSelector/>,
+            content: <MapSelector handleEditMap={handleEditMap}/>,
+        },
+        {
+            id: 'items',
+            label: 'Items',
+            content: <ItemSelector
+                        handleEditItem={handleEditItem}
+                        handleSelectItem={handleSelectItem}/>,
         },
     ];
 

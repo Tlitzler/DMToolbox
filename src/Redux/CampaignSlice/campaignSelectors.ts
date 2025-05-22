@@ -6,3 +6,4 @@ export const selectSelectedCampaignId = (state: RootState) => state.campaigns.se
 export const selectDefaultMapId = (state: RootState) => state.campaigns.selectedCampaign.defaultMapId;
 export const selectMaps = (state: RootState) => state.campaigns.selectedCampaign.maps;
 export const selectSelectedMap = (state: RootState) => state.campaigns.selectedMap;
+export const selectItems = (state: RootState) => state.campaigns.selectedCampaign.items;

@@ -54,8 +54,7 @@ const StyledCloseButton = styled.span({
 });
 
 const StyledContentWrapper = styled.div({
-    paddingBottom: '10px',
-    height: '80%',
+    height: '100%',
     width: '100%',
     overflow: 'auto',
     scrollbarColor: '#aaaaaa transparent',

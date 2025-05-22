@@ -83,7 +83,6 @@ const LabeledInput = ({
     disabled,
 }: ILabeledInputProps) => {
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        console.log('CUSTOM LOG testing disabled', disabled);
         if (disabled) return;
         onChange(event);
     }
