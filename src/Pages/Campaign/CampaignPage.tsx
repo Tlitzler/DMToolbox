@@ -9,7 +9,7 @@ import diceRow from '../../Theme/Images/diceRow.png';
 import diceRowHover from '../../Theme/Images/diceRowHover.png';
 import diceRowActive from '../../Theme/Images/diceRowActive.png';
 import diceRowActiveHover from '../../Theme/Images/diceRowActiveHover.png';
-import { useAppSelector } from '../../Redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { selectSelectedCampaign, selectSelectedMap } from '../../Redux/CampaignSlice/campaignSelectors';
 import Button from '../../Atoms/Button';
 import MapEditor from '../../Molecules/MapEditor';
@@ -17,7 +17,10 @@ import ItemEditor from '../../Molecules/ItemEditor';
 import { IMapObject, IItemObject } from '../../Redux/Types/campaign';
 import Tabs, { ITabOption } from '../../Molecules/Tabs';
 import MapSelector from '../../Molecules/MapSelector';
-import ItemSelector from '../../Molecules/ItemSelector';
+import Selector from '../../Molecules/Selector';
+import { deleteItemThunk } from '../../Redux/CampaignSlice/thunks/deleteItemThunk';
+import { deleteMapThunk } from '../../Redux/CampaignSlice/thunks/deleteMapThunk';
+import { setSelectedMap } from '../../Redux/CampaignSlice/actions/setSelectedCampaign';
 
 const StyledContainer = styled.div({
   width: '100%',
@@ -42,6 +45,8 @@ const StyledNoMapWrapper = styled.div({
 });
 
 const CampaignPage = () => {
+    const dispatch = useAppDispatch();
+
     const campaign = useAppSelector(selectSelectedCampaign);
     const selectedMap = useAppSelector(selectSelectedMap);
     const [displayDiceRoller, setDisplayDiceRoller] = useState(false);
@@ -103,13 +108,23 @@ const CampaignPage = () => {
         setDisplayMapEditor(true);
     }
 
+    const handleSelectMap = (mapId: number) => {
+        dispatch(setSelectedMap(mapId));
+    }
+
+    const handleDeleteMap = (mapId: number) => {
+        dispatch(deleteMapThunk(mapId));
+        setEditingMap(undefined);
+    }
+
     const handleEditItem = (itemId: number) => {
         setEditingItem(campaign.items.find(item => item.id === itemId));
         setDisplayItemEditor(true);
     }
 
-    const handleSelectItem = (itemId: number) => {
-        // Repurpose item editor to just display an item maybe?
+    const handleDeleteItem = (itemId: number) => {
+        dispatch(deleteItemThunk(itemId));
+        setEditingItem(undefined);
     }
 
     const tabOptions: ITabOption[] = [
@@ -121,14 +136,30 @@ const CampaignPage = () => {
         {
             id: 'maps',
             label: 'Maps',
-            content: <MapSelector handleEditMap={handleEditMap}/>,
+            content: <Selector
+                        options={campaign.maps.map(map => ({
+                            id: map.id,
+                            name: map.name,
+                            image: map.imageURL,
+                        }))}
+                        handleEdit={handleEditMap}
+                        handleSelect={handleSelectMap}
+                        selectedId={editingMap?.id ?? -1}
+                        handleDelete={handleDeleteMap}/>,
         },
         {
             id: 'items',
             label: 'Items',
-            content: <ItemSelector
-                        handleEditItem={handleEditItem}
-                        handleSelectItem={handleSelectItem}/>,
+            content: <Selector
+                        options={campaign.items.map(item => ({
+                            id: item.id,
+                            name: item.name,
+                            image: item.imageURL,
+                        }))}
+                        handleEdit={handleEditItem}
+                        handleSelect={handleEditItem}
+                        selectedId={editingItem?.id ?? -1}
+                        handleDelete={handleDeleteItem}/>,
         },
     ];
 
