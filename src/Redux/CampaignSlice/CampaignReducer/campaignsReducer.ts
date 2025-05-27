@@ -10,6 +10,9 @@ import { setDefaultMapThunk } from '../thunks/setDefaultMapThunk';
 import { addItemThunk } from '../thunks/addItemThunk';
 import { updateItemThunk } from '../thunks/updateItemThunk';
 import { deleteItemThunk } from '../thunks/deleteItemThunk';
+import { addHazardThunk } from '../thunks/addHazardThunk';
+import { updateHazardThunk } from '../thunks/updateHazardThunk';
+import { deleteHazardThunk } from '../thunks/deleteHazardThunk';
 
 interface ICampaignSlice {
     campaignList: ICampaignObject[];
@@ -103,6 +106,22 @@ export const campaignsReducer = createReducer(
         builder.addCase(deleteItemThunk.fulfilled, (state, action) => {
             const itemId = action.payload.id;
             state.selectedCampaign.items = state.selectedCampaign.items.filter(item => item.id !== itemId);
+        });
+        builder.addCase(addHazardThunk.fulfilled, (state, action) => {
+            const newHazard = action.payload;
+            state.selectedCampaign.hazards.push(newHazard);
+        });
+        builder.addCase(updateHazardThunk.fulfilled, (state, action) => {
+            const updatedHazard = action.payload;
+            console.log('Updated hazard:', updatedHazard);
+            const index = state.selectedCampaign.hazards.findIndex(hazard => hazard.id === updatedHazard.id);
+            if (index !== -1) {
+                state.selectedCampaign.hazards[index] = updatedHazard;
+            }
+        });
+        builder.addCase(deleteHazardThunk.fulfilled, (state, action) => {
+            const hazardId = action.payload.id;
+            state.selectedCampaign.hazards = state.selectedCampaign.hazards.filter(hazard => hazard.id !== hazardId);
         });
     }
 );

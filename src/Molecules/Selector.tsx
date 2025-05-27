@@ -73,9 +73,8 @@ const Selector = ({
     return (
         <>
             {options.map(option => (
-                <StyledRowWrapper>
+                <StyledRowWrapper key={option.id}>
                     <StyledOptionWrapper
-                        key={option.id}
                         onClick={() => handleSelect(option.id)}
                         style={{ backgroundColor: selectedId === option.id ? '#e0e0e0' : 'transparent' }}
                     >

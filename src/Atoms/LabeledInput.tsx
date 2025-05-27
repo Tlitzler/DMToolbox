@@ -14,6 +14,7 @@ export interface ILabeledInputProps {
     submitForm?: () => void;
     error?: string;
     disabled?: boolean;
+    step?: number;
 };
 
 interface IWrapperProps {
@@ -81,6 +82,7 @@ const LabeledInput = ({
     submitForm,
     error,
     disabled,
+    step = 1,
 }: ILabeledInputProps) => {
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (disabled) return;
@@ -111,6 +113,7 @@ const LabeledInput = ({
                     value={value}
                     onChange={handleChange}
                     type={type}
+                    step={type === 'number' ? step : undefined}
                     min={min}
                     max={max}/>
             )}

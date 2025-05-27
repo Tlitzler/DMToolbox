@@ -14,12 +14,13 @@ import { selectSelectedCampaign, selectSelectedMap } from '../../Redux/CampaignS
 import Button from '../../Atoms/Button';
 import MapEditor from '../../Molecules/MapEditor';
 import ItemEditor from '../../Molecules/ItemEditor';
-import { IMapObject, IItemObject } from '../../Redux/Types/campaign';
+import HazardEditor from '../../Molecules/HazardEditor';
+import { IMapObject, IItemObject, IHazardObject } from '../../Redux/Types/campaign';
 import Tabs, { ITabOption } from '../../Molecules/Tabs';
-import MapSelector from '../../Molecules/MapSelector';
 import Selector from '../../Molecules/Selector';
 import { deleteItemThunk } from '../../Redux/CampaignSlice/thunks/deleteItemThunk';
 import { deleteMapThunk } from '../../Redux/CampaignSlice/thunks/deleteMapThunk';
+import { deleteHazardThunk } from '../../Redux/CampaignSlice/thunks/deleteHazardThunk';
 import { setSelectedMap } from '../../Redux/CampaignSlice/actions/setSelectedCampaign';
 
 const StyledContainer = styled.div({
@@ -52,8 +53,10 @@ const CampaignPage = () => {
     const [displayDiceRoller, setDisplayDiceRoller] = useState(false);
     const [displayMapEditor, setDisplayMapEditor] = useState(false);
     const [displayItemEditor, setDisplayItemEditor] = useState(false);
+    const [displayHazardEditor, setDisplayHazardEditor] = useState(false);
     const [editingMap, setEditingMap] = useState<IMapObject | undefined>();
     const [editingItem, setEditingItem] = useState<IItemObject | undefined>();
+    const [editingHazard, setEditingHazard] = useState<IHazardObject | undefined>();
     
     const toolbarOptions: IToolbarOption[] = [
         {
@@ -76,7 +79,7 @@ const CampaignPage = () => {
                     key="map"
                     map={editingMap}
                     onClose={() => {
-                        setDisplayMapEditor(false)
+                        setDisplayMapEditor(false);
                         setEditingMap(undefined);
                     }}
                     />
@@ -92,7 +95,7 @@ const CampaignPage = () => {
                     key="item"
                     item={editingItem}
                     onClose={() => {
-                        setDisplayItemEditor(false)
+                        setDisplayItemEditor(false);
                         setEditingItem(undefined);
                     }}
                     defaultWidth={450}
@@ -100,6 +103,23 @@ const CampaignPage = () => {
             ),
             onClick: () => setDisplayItemEditor(!displayItemEditor),
             visible: displayItemEditor,
+        },
+        {
+            text: 'Hazard Editor',
+            id: 'hazard',
+            component: (
+                <HazardEditor 
+                    key="hazard"
+                    hazard={editingHazard}
+                    onClose={() => {
+                        setDisplayHazardEditor(false);
+                        setEditingHazard(undefined);
+                    }}
+                    defaultWidth={450}
+                    defaultHeight={550}/>
+            ),
+            onClick: () => setDisplayHazardEditor(!displayHazardEditor),
+            visible: displayHazardEditor,
         }
     ]; 
 
@@ -125,6 +145,16 @@ const CampaignPage = () => {
     const handleDeleteItem = (itemId: number) => {
         dispatch(deleteItemThunk(itemId));
         setEditingItem(undefined);
+    }
+
+    const handleEditHazard = (hazardId: number) => {
+        setEditingHazard(campaign.hazards.find(hazard => hazard.id === hazardId));
+        setDisplayHazardEditor(true);
+    }
+
+    const handleDeleteHazard = (hazardId: number) => {
+        dispatch(deleteHazardThunk(hazardId));
+        setEditingHazard(undefined);
     }
 
     const tabOptions: ITabOption[] = [
@@ -161,6 +191,20 @@ const CampaignPage = () => {
                         selectedId={editingItem?.id ?? -1}
                         handleDelete={handleDeleteItem}/>,
         },
+        {
+            id: 'hazards',
+            label: 'Hazards',
+            content: <Selector
+                        options={campaign.hazards.map(hazard => ({
+                            id: hazard.id,
+                            name: hazard.name,
+                            image: hazard.imageURL,
+                        }))}
+                        handleEdit={handleEditHazard}
+                        handleSelect={handleEditHazard}
+                        selectedId={editingHazard?.id ?? -1}
+                        handleDelete={handleDeleteHazard}/>,
+        }
     ];
 
     return (

@@ -23,6 +23,9 @@ const StyledTabsWrapper = styled.div({
 const StyledTabList = styled.div({
     display: 'flex',
     borderBottom: '1px solid #ccc',
+    overflowX: 'auto',
+    scrollbarColor: '#aaaaaa #fffef0',
+    scrollbarWidth: 'thin',
 });
 
 interface IStyledTabProps {
@@ -64,7 +67,7 @@ const Tabs = ({
 
     const tabWidth = `${Math.max(100 / options.length, 20)}%`;
 
-    const overflow = options.length > 5;
+    const overflow = options.length > 3;
 
     return (
         <StyledTabsWrapper>
